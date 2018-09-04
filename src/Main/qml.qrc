@@ -6,9 +6,9 @@
         <file>main.cpp</file>
         <file>resizeqmlwindow.h</file>
         <file>ResizeWidget.qml</file>
-        <file>StateBar.qml</file>
+        <file>MainWindowStatusBar.qml</file>
         <file>FontButton.qml</file>
-        <file>TitleBar.qml</file>
+        <file>MainWindowTitleBar.qml</file>
         <file>ContentWidget.qml</file>
         <file>ToolBtn.qml</file>
         <file>MainWidget.qml</file>
@@ -73,5 +73,7 @@
         <file>images/logout_normal32x32.png</file>
         <file>images/skin_hover32x32.png</file>
         <file>images/skin_normal32x32.png</file>
+        <file>CommonTitleBar.qml</file>
+        <file>BackgroundMrg.qml</file>
     </qresource>
 </RCC>

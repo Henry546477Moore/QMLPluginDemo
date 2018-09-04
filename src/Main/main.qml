@@ -54,7 +54,7 @@ ApplicationWindow {
             anchors.fill: parent
             spacing: 0
             //标题栏
-            TitleBar {
+            MainWindowTitleBar {
                 id:titleBar
                 title: mainWindow.title
                 height: 32
@@ -69,7 +69,7 @@ ApplicationWindow {
                 //color: "red"
             }
             //状态栏
-            StateBar {
+            MainWindowStatusBar {
                 id:statusBar
                 height: 32
                 Layout.fillWidth: true

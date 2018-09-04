@@ -53,7 +53,7 @@ Rectangle {
         picHover: "qrc:/images/skin_hover.png"
         picPressed: "qrc:/images/skin_pressed.png"
 
-        onClicked: mainWindow.showMinimized()
+        onClicked: skinPopup.open()
     }
     ImageButton {
         id:settingBtn
@@ -63,7 +63,6 @@ Rectangle {
         picHover: "qrc:/images/menu_hover"
         picPressed: "qrc:/images/menu_pressed"
 
-        onClicked: mainWindow.showMinimized()
     }
 
 
@@ -105,6 +104,17 @@ Rectangle {
         picPressed: "qrc:/images/close_pressed.png"
 
         onClicked: Qt.quit()
+    }
+
+    Popup {
+        id: skinPopup
+        width: 610
+        height: 450
+
+        BackgroundMrg {
+            id: backgroundMrg
+            anchors.fill: parent
+        }
     }
 
 
