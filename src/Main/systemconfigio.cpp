@@ -7,7 +7,7 @@
 SystemConfigIO::SystemConfigIO(QObject *parent) : QObject(parent)
 {
     _sysConfigPath = QString("%1/hmconfig.ini").arg(QCoreApplication::applicationDirPath());
-    ReadConfig();
+    readConfig();
 }
 
 /*!
@@ -16,14 +16,14 @@ SystemConfigIO::SystemConfigIO(QObject *parent) : QObject(parent)
  * \author  HenryMoore
  * \date    2018-09-02 16:38
  */
-SystemConfigInfo& SystemConfigIO::ReadConfig()
+SystemConfigInfo& SystemConfigIO::readConfig()
 {
     QString colors;
     QSettings *set = new QSettings(_sysConfigPath, QSettings::IniFormat);
     _sysConfigInfo.IsUseImage = set->value("/background/use_image", false).toBool();
-    _sysConfigInfo.BackgroundSource = set->value("/background/current_source", "blue").toString();
+    _sysConfigInfo.BackgroundSource = set->value("/background/current_source", "red").toString();
     _sysConfigInfo.ImageDirPath = set->value("/background/image_dir", "Images/Background").toString();
-    colors = set->value("/background/colors", "blue").toString();
+    colors = set->value("/background/colors", "red").toString();
     delete set;
 
     _sysConfigInfo.ListImages.clear();
@@ -61,7 +61,7 @@ SystemConfigInfo& SystemConfigIO::ReadConfig()
  * \author  HenryMoore
  * \date    2018-09-02 16:41
  */
-bool SystemConfigIO::WriteUsedBackgroundType(const bool &backgroundType, const QString &backgroundSource)
+bool SystemConfigIO::writeUsedBackgroundType(const bool &backgroundType, const QString &backgroundSource)
 {
     _sysConfigInfo.IsUseImage = backgroundType;
     _sysConfigInfo.BackgroundSource = backgroundSource;
@@ -83,7 +83,7 @@ bool SystemConfigIO::WriteUsedBackgroundType(const bool &backgroundType, const Q
  * \author  HenryMoore
  * \date    2018-09-02 16:41
  */
-bool SystemConfigIO::ModifyBackground(const bool &backgroundType, const QString &backgroundSource)
+bool SystemConfigIO::modifyBackground(const bool &backgroundType, const QString &backgroundSource)
 {
 
 }

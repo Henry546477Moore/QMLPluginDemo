@@ -23,7 +23,6 @@ Rectangle {
         text: root.title
     }
 
-
     ImageButton {
         id:loginBtn
         anchors.right: loginTip.left
@@ -62,7 +61,6 @@ Rectangle {
         picNormal: "qrc:/images/menu_normal"
         picHover: "qrc:/images/menu_hover"
         picPressed: "qrc:/images/menu_pressed"
-
     }
 
 
@@ -106,17 +104,23 @@ Rectangle {
         onClicked: Qt.quit()
     }
 
-    Popup {
-        id: skinPopup
-        width: 610
-        height: 450
 
-        BackgroundMrg {
-            id: backgroundMrg
-            anchors.fill: parent
+    Popup
+        {
+            id:skinPopup
+            width: 600
+            height: 400
+            x:(mainWindow.width-width) / 2
+            y:(mainWindow.height-height) / 2
+            opacity: 0.8
+            modal: true
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+            BackgroundMrg {
+                onClosed: skinPopup.close()
+            }
         }
-    }
-
 
     //最大化(还原)
     function maxUndoFun(){

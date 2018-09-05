@@ -6,14 +6,18 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id:root
     property bool  isMax: false     //标题栏最大化(还原)
+    property alias showMinBtn: minBtn.visible
+    property alias showMaxBtn: maxBtn.visible
     property string title: "自定义窗体"   //标题栏
     color: "transparent"
-    property bool isLogin: true
+
+    signal closed
 
     Text {
         id: cusTitle
         anchors.left: parent.left
         anchors.leftMargin: 15
+        anchors.top: parent.top
         anchors.verticalCenter: parent.verticalCenter
         color: "white"
         font.pixelSize: 18
@@ -59,7 +63,7 @@ Rectangle {
         picNormal: "qrc:/images/close_normal.png"
         picPressed: "qrc:/images/close_pressed.png"
 
-        onClicked: Qt.quit()
+        onClicked: root.closed()
     }
 
     //最大化(还原)
@@ -83,4 +87,3 @@ Rectangle {
         isMax = !isMax
     }
 }
-

@@ -3,12 +3,14 @@
 #include <QQmlContext>
 #include <QFontDatabase>
 #include "resizeqmlwindow.h"
+#include "systemconfigio.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+    qmlRegisterType<SystemConfigIO>("com.henrymoore", 1, 0, "SystemConfigIO");
 
     int fontID = QFontDatabase::addApplicationFont(":/Fonts/fontawesome-webfont.ttf");
     QFontDatabase::applicationFontFamilies(fontID);

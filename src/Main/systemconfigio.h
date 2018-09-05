@@ -22,7 +22,7 @@ public:
      * \author  HenryMoore
      * \date    2018-09-02 16:38
      */
-    Q_INVOKABLE SystemConfigInfo& ReadConfig();
+    Q_INVOKABLE SystemConfigInfo& readConfig();
     /*!
      * \brief   set current background type and source
      * \param   backgroundType: background type, true: picture, false: solid color
@@ -31,7 +31,7 @@ public:
      * \author  HenryMoore
      * \date    2018-09-02 16:41
      */
-    Q_INVOKABLE bool WriteUsedBackgroundType(const bool &backgroundType, const QString &backgroundSource);
+    Q_INVOKABLE bool writeUsedBackgroundType(const bool &backgroundType, const QString &backgroundSource);
     /*!
      * \brief   add or remove background source
      * \param   backgroundType: background type, true: picture, false: solid color
@@ -40,7 +40,7 @@ public:
      * \author  HenryMoore
      * \date    2018-09-02 16:41
      */
-    Q_INVOKABLE bool ModifyBackground(const bool &backgroundType, const QString &backgroundSource);
+    Q_INVOKABLE bool modifyBackground(const bool &backgroundType, const QString &backgroundSource);
 
 signals:
 
