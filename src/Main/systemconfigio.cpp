@@ -3,11 +3,24 @@
 #include <QSettings>
 #include <QDir>
 #include <QStringList>
+#include <QRgb>
 
 SystemConfigIO::SystemConfigIO(QObject *parent) : QObject(parent)
 {
     _sysConfigPath = QString("%1/hmconfig.ini").arg(QCoreApplication::applicationDirPath());
     readConfig();
+}
+
+
+QString SystemConfigIO::currentBackgroundSource()
+{
+    return _sysConfigInfo.BackgroundSource;
+}
+
+void SystemConfigIO::setCurrentBackgroundSource(QString source)
+{
+    _sysConfigInfo.BackgroundSource = source;
+    emit currentBackgroundSourceChanged();
 }
 
 /*!
@@ -21,7 +34,7 @@ SystemConfigInfo& SystemConfigIO::readConfig()
     QString colors;
     QSettings *set = new QSettings(_sysConfigPath, QSettings::IniFormat);
     _sysConfigInfo.IsUseImage = set->value("/background/use_image", false).toBool();
-    _sysConfigInfo.BackgroundSource = QColor(set->value("/background/current_source", "blue").toString());
+    _sysConfigInfo.BackgroundSource = set->value("/background/current_source", "blue").toString();
     _sysConfigInfo.ImageDirPath = set->value("/background/image_dir", "Images/Background").toString();
     colors = set->value("/background/colors", "red").toString();
     delete set;
@@ -85,5 +98,5 @@ bool SystemConfigIO::writeUsedBackgroundType(const bool &backgroundType, const Q
  */
 bool SystemConfigIO::modifyBackground(const bool &backgroundType, const QString &backgroundSource)
 {
-
+    return true;
 }

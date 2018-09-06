@@ -25,7 +25,7 @@ public:
      * \brief BackgroundSource
      * The system background source may use a picture or a solid color.
      */
-    QColor BackgroundSource;
+    QString BackgroundSource;
     /*!
      * \brief ImageDirPath
      * The system background picture source directory path

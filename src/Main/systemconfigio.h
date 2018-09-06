@@ -16,6 +16,15 @@ class SystemConfigIO : public QObject
     Q_OBJECT
 public:
     explicit SystemConfigIO(QObject *parent = nullptr);
+    Q_PROPERTY(QString currentBackgroundSource READ currentBackgroundSource WRITE setCurrentBackgroundSource NOTIFY currentBackgroundSourceChanged)
+
+signals:
+    void currentBackgroundSourceChanged();
+
+private:
+    QString currentBackgroundSource();
+    void setCurrentBackgroundSource(QString source);
+
     /*!
      * \breif   read system config
      * \return  system config info
@@ -41,6 +50,7 @@ public:
      * \date    2018-09-02 16:41
      */
     Q_INVOKABLE bool modifyBackground(const bool &backgroundType, const QString &backgroundSource);
+
 
 signals:
 

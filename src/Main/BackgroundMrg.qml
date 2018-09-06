@@ -39,8 +39,6 @@ Item {
         CommonTitleBar {
             id: titleBar
             anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
             width: root.width
             height: 32
             showMinBtn: false
@@ -56,7 +54,7 @@ Item {
             anchors.bottom: root.bottom
 
             Rectangle{
-                color: "red"//mySystemIO.readConfig().BackgroundSource
+                color: mySystemIO.currentBackgroundSource
                 width: root.width
                 height: root.height - titleBar.height
             }
