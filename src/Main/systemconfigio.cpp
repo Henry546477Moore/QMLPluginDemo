@@ -21,7 +21,7 @@ SystemConfigInfo& SystemConfigIO::readConfig()
     QString colors;
     QSettings *set = new QSettings(_sysConfigPath, QSettings::IniFormat);
     _sysConfigInfo.IsUseImage = set->value("/background/use_image", false).toBool();
-    _sysConfigInfo.BackgroundSource = set->value("/background/current_source", "red").toString();
+    _sysConfigInfo.BackgroundSource = QColor(set->value("/background/current_source", "blue").toString());
     _sysConfigInfo.ImageDirPath = set->value("/background/image_dir", "Images/Background").toString();
     colors = set->value("/background/colors", "red").toString();
     delete set;

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QString>
+#include <QColor>
 
 /*!
  * \brief  The SystemConfigInfo class
@@ -24,7 +25,7 @@ public:
      * \brief BackgroundSource
      * The system background source may use a picture or a solid color.
      */
-    QString BackgroundSource;
+    QColor BackgroundSource;
     /*!
      * \brief ImageDirPath
      * The system background picture source directory path

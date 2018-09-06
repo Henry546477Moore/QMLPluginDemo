@@ -108,16 +108,17 @@ Rectangle {
     Popup
         {
             id:skinPopup
-            width: 600
-            height: 400
-            x:(mainWindow.width-width) / 2
-            y:(mainWindow.height-height) / 2
+            contentWidth: bgMrg.implicitWidth
+            contentHeight: bgMrg.implicitHeight
+            x:(mainWindow.width - bgMrg.width) / 2
+            y:(mainWindow.height - bgMrg.height) / 2
             opacity: 0.8
             modal: true
             focus: true
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
 
             BackgroundMrg {
+                id: bgMrg
                 onClosed: skinPopup.close()
             }
         }
