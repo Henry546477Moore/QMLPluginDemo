@@ -59,6 +59,17 @@ Item {
                 width: root.width
                 height: root.height - titleBar.height
             }
+
+            Repeater{
+                id:lstColors
+                model :appConfig.listBackgroundColors
+
+                Rectangle{
+                    width: 50
+                    height: 50
+                    color: model.modelData
+                }
+            }
         }
     }
 

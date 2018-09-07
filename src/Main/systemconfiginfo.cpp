@@ -17,7 +17,7 @@ void SystemConfigInfo::readConfig()
     m_backgroundSource = set->value("/background/current_source", "lightblue").toString();
     m_backgroundOpacity = set->value("/background/source_opacity", 0.8).toDouble();
     m_imgDirPath = set->value("/background/image_dir", "Images/Background").toString();
-    QString colors = set->value("/background/colors", "red").toString();
+    QString colors = set->value("/background/colors", "red;blue;green;#989899;black").toString();
     delete set;
 
     m_listBackgroundImgs.clear();
@@ -101,12 +101,12 @@ void SystemConfigInfo::setBackgroundOpacity(const double &backgroundOpacity)
     }
 }
 
-QList<QString> SystemConfigInfo::listBackgroundImgs()
+QStringList SystemConfigInfo::listBackgroundImgs()
 {
     return m_listBackgroundImgs;
 }
 
-QList<QString> SystemConfigInfo::listBackgroundColors()
+QStringList SystemConfigInfo::listBackgroundColors()
 {
     return m_listBackgroundColors;
 }

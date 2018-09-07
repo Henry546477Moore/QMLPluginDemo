@@ -5,6 +5,7 @@
 #include <QList>
 #include <QString>
 #include <QColor>
+#include <QStringList>
 
 /*!
  * \brief  The SystemConfigInfo class
@@ -17,8 +18,8 @@ class SystemConfigInfo : public QObject
     Q_PROPERTY(bool isUseBackgroundImg READ isUseBackgroundImg WRITE setIsUseBackgroundImg NOTIFY isUseBackgroundImgChanged)
     Q_PROPERTY(QString backgroundSource READ backgroundSource WRITE setBackgroundSource NOTIFY backgroundSourceChanged)
     Q_PROPERTY(double backgroundOpacity READ backgroundOpacity WRITE setBackgroundOpacity NOTIFY backgroundOpacityChanged)
-    Q_PROPERTY(QList<QString> listBackgroundImgs READ listBackgroundImgs)
-    Q_PROPERTY(QList<QString> listBackgroundColors READ listBackgroundColors)
+    Q_PROPERTY(QStringList listBackgroundImgs READ listBackgroundImgs)
+    Q_PROPERTY(QStringList listBackgroundColors READ listBackgroundColors)
 
 public:
     explicit SystemConfigInfo(QObject *parent = nullptr);
@@ -40,9 +41,9 @@ private:
     double backgroundOpacity();
     void setBackgroundOpacity(const double &backgroundOpacity);
 
-    QList<QString> listBackgroundImgs();
+    QStringList listBackgroundImgs();
 
-    QList<QString> listBackgroundColors();
+    QStringList listBackgroundColors();
 
     void readConfig();
 
@@ -50,8 +51,8 @@ private:
     bool m_isUseBackgroundImg;
     QString m_backgroundSource;
     double m_backgroundOpacity;
-    QList<QString> m_listBackgroundImgs;
-    QList<QString> m_listBackgroundColors;
+    QStringList m_listBackgroundImgs;
+    QStringList m_listBackgroundColors;
     QString m_sysConfigPath;
     QString m_imgDirPath;
 };
