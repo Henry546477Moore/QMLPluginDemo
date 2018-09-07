@@ -54,7 +54,8 @@ Item {
             anchors.bottom: root.bottom
 
             Rectangle{
-                color: mySystemIO.currentBackgroundSource
+                color: appConfig.backgroundSource
+                opacity: appConfig.backgroundOpacity
                 width: root.width
                 height: root.height - titleBar.height
             }
@@ -62,7 +63,7 @@ Item {
     }
 
 
-    SystemConfigIO{
-        id: mySystemIO
+    SystemConfigInfo{
+        id: appConfig
     }
 }
