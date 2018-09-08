@@ -21,18 +21,19 @@ void SystemConfigInfo::readConfig()
     delete set;
 
     m_listBackgroundImgs.clear();
+    m_imgDirPath = QString("%1/%2").arg(QCoreApplication::applicationDirPath()).arg(m_imgDirPath);
     QDir dir(m_imgDirPath);
     if(dir.exists())
     {
         dir.setFilter(QDir::Files | QDir::NoSymLinks);
         QStringList filters;
-        filters << "*.png";
+        filters << "*.png" << "*.jpg";
         dir.setNameFilters(filters);
         QStringList lstFiles = dir.entryList();
         if(lstFiles.count() > 0)
         {
             foreach (QString p, lstFiles) {
-                m_listBackgroundImgs.push_back(p);
+                m_listBackgroundImgs.push_back(QString("%1/%2").arg(m_imgDirPath).arg(p));
             }
         }
     }

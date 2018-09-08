@@ -117,7 +117,7 @@ Rectangle {
             focus: true
             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
 
-            BackgroundMrg {
+            BackgroundMrgView {
                 id: bgMrg
                 onClosed: skinPopup.close()
             }

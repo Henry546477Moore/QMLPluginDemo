@@ -74,6 +74,8 @@
         <file>images/skin_hover32x32.png</file>
         <file>images/skin_normal32x32.png</file>
         <file>CommonTitleBar.qml</file>
-        <file>BackgroundMrg.qml</file>
+        <file>BackgroundMrgView.qml</file>
+        <file>BackgroundColorDelegate.qml</file>
+        <file>BackgroundImageDelete.qml</file>
     </qresource>
 </RCC>
