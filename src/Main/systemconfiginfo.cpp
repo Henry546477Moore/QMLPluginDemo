@@ -17,7 +17,7 @@ void SystemConfigInfo::readConfig()
     m_backgroundSource = set->value("/background/current_source", "lightblue").toString();
     m_backgroundOpacity = set->value("/background/source_opacity", 0.8).toDouble();
     m_imgDirPath = set->value("/background/image_dir", "Images/Background").toString();
-    QString colors = set->value("/background/colors", "red;blue;green;#989899;black").toString();
+    QString colors = set->value("/background/colors", "red;blue;green;#989899;black;red;blue;green;#989899;black").toString();
     delete set;
 
     m_listBackgroundImgs.clear();
@@ -33,7 +33,7 @@ void SystemConfigInfo::readConfig()
         if(lstFiles.count() > 0)
         {
             foreach (QString p, lstFiles) {
-                m_listBackgroundImgs.push_back(QString("%1/%2").arg(m_imgDirPath).arg(p));
+                m_listBackgroundImgs.push_back(QString("file:%1/%2").arg(m_imgDirPath).arg(p));
             }
         }
     }

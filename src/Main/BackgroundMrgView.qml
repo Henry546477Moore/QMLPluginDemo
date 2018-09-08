@@ -1,4 +1,5 @@
 import QtQuick 2.11
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import com.henrymoore 1.0
@@ -60,28 +61,30 @@ Item {
                 height: root.height - titleBar.height
             }
 
-            ColumnLayout {
-                ListView {
-                    id:lstColors
-                    orientation: ListView.Horizontal
-                    width: root.width
-                    height: (root.height - titleBar.height) / 2
-                    model :appConfig.listBackgroundColors
-                    delegate: BackgroundColorDelegate {}
-                }
-                ListView {
-                    id:lstImages
-                    orientation: ListView.Horizontal
-                    width: root.width
-                    height: (root.height - titleBar.height) / 2
-                    model :appConfig.listBackgroundImgs
-                    delegate: BackgroundImageDelete {}
+            ScrollView {
+                height: root.height - titleBar.height
+                clip: true
+                ColumnLayout {
+                    Flow {
+                        width: root.width
+                        Repeater {
+                            id:lstColors
+                            model :appConfig.listBackgroundColors
+                            delegate: BackgroundColorDelegate {}
+                        }
+                    }
+                    Flow {
+                        width: root.width
+                        Repeater {
+                            id:lstImages
+                            model :appConfig.listBackgroundImgs
+                            delegate: BackgroundImageDelete {}
+                        }
+                    }
                 }
             }
-
         }
     }
-
 
     SystemConfigInfo{
         id: appConfig
