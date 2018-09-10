@@ -61,6 +61,8 @@ Rectangle {
         picNormal: "qrc:/images/menu_normal"
         picHover: "qrc:/images/menu_hover"
         picPressed: "qrc:/images/menu_pressed"
+
+        onClicked: settingMenu.popup()
     }
 
 
@@ -104,6 +106,21 @@ Rectangle {
         onClicked: Qt.quit()
     }
 
+    Menu {
+        id: settingMenu
+        Menu {
+            title: qsTr("Languate")
+
+            MenuItem {
+                text: qsTr("English")
+                onTriggered: appConfig.setCurrentLanguage("en_US")
+            }
+            MenuItem {
+                text: qsTr("Chinese")
+                onTriggered: appConfig.setCurrentLanguage("zh_CN")
+            }
+        }
+    }
 
     Popup
         {

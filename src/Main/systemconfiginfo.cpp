@@ -3,6 +3,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QFile>
+#include <QTranslator>
 
 SystemConfigInfo::SystemConfigInfo(QObject *parent) : QObject(parent)
 {
@@ -12,12 +13,25 @@ SystemConfigInfo::SystemConfigInfo(QObject *parent) : QObject(parent)
 
 void SystemConfigInfo::readConfig()
 {
+    QFile f(m_sysConfigPath);
+    if(!f.exists())
+    {
+        QSettings *set1 = new QSettings(m_sysConfigPath, QSettings::IniFormat);
+
+        set1->setValue("/background/language", "zh_CN");
+        set1->setValue("/background/use_image", false);
+        set1->setValue("/background/current_source", "#006699");
+        set1->setValue("/background/source_opacity", 0.8);
+        set1->setValue("/background/image_dir", "Images/Background");
+        set1->setValue("/background/colors", "#000099;#003399;#006699;#006600;#009900;#006633;#009933;#006666;#009966;#009999;#0000cc;#0033cc");
+    }
     QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
+    QString _language = set->value("/background/language", "zh_CN").toString();
     m_isUseBackgroundImg = set->value("/background/use_image", false).toBool();
-    m_backgroundSource = set->value("/background/current_source", "lightblue").toString();
+    m_backgroundSource = set->value("/background/current_source", "#006699").toString();
     m_backgroundOpacity = set->value("/background/source_opacity", 0.8).toDouble();
     m_imgDirPath = set->value("/background/image_dir", "Images/Background").toString();
-    QString colors = set->value("/background/colors", "red;blue;green;#989899;black;red;blue;green;#989899;black").toString();
+    QString colors = set->value("/background/colors", "#006699").toString();
     delete set;
 
     m_listBackgroundImgs.clear();
@@ -42,6 +56,37 @@ void SystemConfigInfo::readConfig()
     m_listBackgroundColors.clear();
     foreach (QString color, strColors) {
         m_listBackgroundColors.push_back(color);
+    }
+
+    setCurrentLanguage(_language);
+}
+
+
+QString SystemConfigInfo::currentLanguage()
+{
+    return m_currentLanguage;
+}
+QTranslator *trans = nullptr;
+void SystemConfigInfo::setCurrentLanguage(const QString &currentLanguage)
+{
+    if(currentLanguage != m_currentLanguage)
+    {
+        m_currentLanguage = currentLanguage;
+
+        QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
+        set->setValue("/background/language", m_currentLanguage);
+        delete set;
+
+        if(trans == nullptr)
+        {
+            trans = new QTranslator;
+            qApp->installTranslator(trans);
+        }
+
+        QString languagePath(QString("%1/languages/%2.qm").arg(QCoreApplication::applicationDirPath()).arg(currentLanguage));
+        trans->load(languagePath);
+
+        emit currentLanguageChanged();
     }
 }
 
