@@ -112,6 +112,12 @@ QStringList SystemConfigInfo::listBackgroundColors()
     return m_listBackgroundColors;
 }
 
+void SystemConfigInfo::setBackgroundSource(const bool &isImg, const QString &source)
+{
+    setIsUseBackgroundImg(isImg);
+    setBackgroundSource(source);
+}
+
 
 void SystemConfigInfo::addBackgroundSource(const bool &isImg, const QString &source)
 {

@@ -4,6 +4,7 @@ import QtQuick.Window 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+import com.henrymoore 1.0
 
 ApplicationWindow {
     id:mainWindow
@@ -13,14 +14,21 @@ ApplicationWindow {
     height: 640
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Window //注意:不加Qt.Window最小化后任务栏看不到程序
-    //color:Qt.rgba(0.5,0.5,0.5,0.9)          //设置透明度
-    //modality: Qt.NonModal                   //窗体形式
-    color:"transparent"
+
+    SystemConfigInfo{
+        id: appConfig
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        visible: !appConfig.isUseBackgroundImg
+        color: appConfig.backgroundSource
+    }
 
     Image {
         id: image
         anchors.fill: parent
-        source: "qrc:/images/head_bg_3.jpg"
+        source: appConfig.backgroundSource
         fillMode: Image.PreserveAspectCrop
         visible: false
     }
@@ -41,8 +49,8 @@ ApplicationWindow {
         anchors.fill: image
         source: image
         maskSource: mask
+        visible: appConfig.isUseBackgroundImg
     }
-
 
     ResizeWidget {
         z: 1

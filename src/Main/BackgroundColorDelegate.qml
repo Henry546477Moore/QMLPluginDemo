@@ -5,11 +5,18 @@ Item {
     height: 120
 
     Rectangle{
+        id: colorRect
         width: 140
         height: 110
         border.color: "white"
         border.width: 0.5
         anchors.centerIn: parent
         color: model.modelData
+
+        MouseArea {
+            hoverEnabled: true
+            anchors.fill: parent
+            onClicked: appConfig.setBackgroundSource(false, model.modelData)
+        }
     }
 }

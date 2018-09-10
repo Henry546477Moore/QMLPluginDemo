@@ -15,5 +15,11 @@ Item {
             anchors.centerIn: parent
             source: model.modelData
         }
+
+        MouseArea {
+            hoverEnabled: true
+            anchors.fill: parent
+            onClicked: appConfig.setBackgroundSource(true, model.modelData)
+        }
     }
 }

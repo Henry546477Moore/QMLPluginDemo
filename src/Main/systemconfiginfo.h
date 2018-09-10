@@ -23,8 +23,10 @@ class SystemConfigInfo : public QObject
 
 public:
     explicit SystemConfigInfo(QObject *parent = nullptr);
+    Q_INVOKABLE void setBackgroundSource(const bool &isImg, const QString &source);
     Q_INVOKABLE void addBackgroundSource(const bool &isImg, const QString &source);
     Q_INVOKABLE void removeBackgroundSource(const bool &isImg, const QString &source);
+    Q_INVOKABLE void setBackgroundOpacity(const double &backgroundOpacity);
 
 signals:
     void isUseBackgroundImgChanged();
@@ -39,7 +41,6 @@ private:
     void setBackgroundSource(const QString &backgroundSource);
 
     double backgroundOpacity();
-    void setBackgroundOpacity(const double &backgroundOpacity);
 
     QStringList listBackgroundImgs();
 
