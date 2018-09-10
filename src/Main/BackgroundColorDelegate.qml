@@ -8,27 +8,12 @@ Item {
 
     Rectangle{
         id: colorRect
-        width: 140
+        width: 135
         height: 110
         border.color: "white"
         border.width: 0.5
         anchors.centerIn: parent
         color: model.modelData
-
-        RowLayout {
-            FontButton {
-                id: addBtn
-                text: "\uf0d5"
-            }
-            FontButton {
-                id: removeBtn
-                text: "\uf010"
-            }
-            FontButton {
-                id: applyBtn
-                text: "\uf010"
-            }
-        }
 
         MouseArea {
             hoverEnabled: true

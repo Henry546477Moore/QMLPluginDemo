@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
@@ -73,19 +74,39 @@ Item {
                 opacity: appConfig.backgroundOpacity
             }
 
+            ImageButton {
+                id: addImg
+                height: 35
+
+
+                picHover: "qrc:/images/addimg_32x32.png"
+                picNormal: "qrc:/images/addimg_32x32.png"
+                picPressed: "qrc:/images/addimg_32x32.png"
+
+                onClicked: fileDialog.open()
+            }
+            ImageButton {
+                id: addColor
+                height: 35
+                anchors.left: addImg.right
+
+
+                picHover: "qrc:/images/addcolor_32x32.png"
+                picNormal: "qrc:/images/addcolor_32x32.png"
+                picPressed: "qrc:/images/addcolor_32x32.png"
+
+                onClicked: colorDialog.open()
+            }
 
             Slider {
                 id: sliderBgOpacity
                 width: root.width - 20
+                anchors.top: addImg.bottom
                 anchors.horizontalCenter: root.horizontalCenter
                 height: 30
                 stepSize: 0.1
                 value: appConfig.backgroundOpacity
                 onValueChanged: appConfig.setBackgroundOpacity(value)
-//                style: SliderStyle {
-//                       groove: m_Slider
-//                       handle: m_Handle
-//                }
             }
             Component {
                 id: m_Slider
@@ -112,7 +133,7 @@ Item {
 
             ScrollView {
                 anchors.top: sliderBgOpacity.bottom
-                height: root.height - titleBar.height - sliderBgOpacity.height - 5
+                height: root.height - titleBar.height - sliderBgOpacity.height - addColor.height - 5
                 clip: true
                 ColumnLayout {
                     Flow {
@@ -134,5 +155,22 @@ Item {
                 }
             }
         }
+    }
+
+
+    FileDialog {
+        id: fileDialog
+        title: qsTr("Choice the image as system background image source")
+        nameFilters: [
+        "Image Files (*.jpg *.png *.gif *.bmp *.ico)"
+        ]
+        onAccepted: appConfig.addBackgroundSource(true, fileUrl)
+    }
+
+    ColorDialog {
+        id: colorDialog
+        title: qsTr("Choice the color as system background color source")
+        color: "#aaaaaa"
+        onAccepted: appConfig.addBackgroundSource(false, color)
     }
 }

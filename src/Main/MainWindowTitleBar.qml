@@ -108,6 +108,7 @@ Rectangle {
 
     Menu {
         id: settingMenu
+
         Menu {
             title: qsTr("Languate")
 

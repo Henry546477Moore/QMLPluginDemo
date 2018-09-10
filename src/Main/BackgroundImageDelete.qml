@@ -5,7 +5,7 @@ Item {
     height: 120
 
     Rectangle {
-        width: 140
+        width: 135
         height: 110
         border.color: "white"
         border.width: 0.5

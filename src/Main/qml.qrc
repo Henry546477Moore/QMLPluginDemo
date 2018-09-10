@@ -77,5 +77,7 @@
         <file>BackgroundMrgView.qml</file>
         <file>BackgroundColorDelegate.qml</file>
         <file>BackgroundImageDelete.qml</file>
+        <file>images/addcolor_32x32.png</file>
+        <file>images/addimg_32x32.png</file>
     </qresource>
 </RCC>

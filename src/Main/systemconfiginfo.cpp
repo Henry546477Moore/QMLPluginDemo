@@ -168,19 +168,34 @@ void SystemConfigInfo::addBackgroundSource(const bool &isImg, const QString &sou
 {
     if(isImg)
     {
-        QFile f(source);
+        QString filePath = source;
+        if(source.startsWith("file:///"))
+        {
+            filePath = filePath.replace("file:///", "");
+        }
+        QFile f(filePath);
         if(f.exists())
         {
-            f.remove();
+            QString fileName = QFileInfo(filePath).fileName();
+            QString destPath = QString("%1/%2").arg(m_imgDirPath).arg(fileName);
+            if(!m_listBackgroundImgs.contains(destPath))
+            {
+                f.copy(destPath);
+                m_listBackgroundImgs.push_front(QString("file:%1").arg(destPath));
+                emit listBackgroundImgsChanged();
+            }
         }
     }
     else
     {
+        if(!m_listBackgroundColors.contains(source))
+        {
+            m_listBackgroundColors.push_front(source);
 
+            QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
+            set->setValue("/background/colors", m_listBackgroundColors.join(";"));
+
+            emit listBackgroundColorsChanged();
+        }
     }
-}
-
-void SystemConfigInfo::removeBackgroundSource(const bool &isImg, const QString &source)
-{
-
 }
