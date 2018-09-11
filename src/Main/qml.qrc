@@ -13,7 +13,6 @@
         <file>ToolBtn.qml</file>
         <file>MainWidget.qml</file>
         <file>LabelBtn.qml</file>
-        <file>MyToolTip.qml</file>
         <file>ImageButton.qml</file>
         <file>images/close_hover.png</file>
         <file>images/close_normal.png</file>

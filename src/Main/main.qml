@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import com.henrymoore 1.0
+import Qt.labs.platform 1.0
 
 ApplicationWindow {
     id:mainWindow
@@ -85,11 +86,36 @@ ApplicationWindow {
         }
     }
 
+    SystemTrayIcon {
+        id: myTrayIcon
+        visible: true
+
+        iconSource: "qrc:/images/logo.ico"
+
+        onActivated: {
+            mainWindow.show()
+            mainWindow.raise()
+            mainWindow.requestActivate()
+        }
+
+        menu: Menu {
+            Button {
+                text: qsTr("test")
+            }
+            MenuItem {
+                text: qsTr("Quit")
+                onTriggered: Qt.quit()
+            }
+        }
+
+    }
+
     Component.onCompleted: {
         translator()
     }
 
     function translator() {
-        title = qsTr("QML Custom Window")
+        myTrayIcon.tooltip = title = qsTr("QML Custom Window")
+        myTrayIcon.showMessage(title, qsTr("Change language"))
     }
 }

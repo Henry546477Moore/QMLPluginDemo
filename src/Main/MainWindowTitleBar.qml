@@ -27,9 +27,9 @@ Rectangle {
         id:loginBtn
         anchors.right: loginTip.left
 
-        picNormal: "qrc:/images/loginu_normal"
-        picHover: "qrc:/images/loginu_hover"
-        picPressed: "qrc:/images/loginu_pressed"
+        picNormal: "qrc:/images/loginu_normal.png"
+        picHover: "qrc:/images/loginu_hover.png"
+        picPressed: "qrc:/images/loginu_pressed.png"
 
         onClicked: root.loginUndoFun()
     }
@@ -58,9 +58,9 @@ Rectangle {
         id:settingBtn
         anchors.right: minBtn.left
 
-        picNormal: "qrc:/images/menu_normal"
-        picHover: "qrc:/images/menu_hover"
-        picPressed: "qrc:/images/menu_pressed"
+        picNormal: "qrc:/images/menu_normal.png"
+        picHover: "qrc:/images/menu_hover.png"
+        picPressed: "qrc:/images/menu_pressed.png"
 
         onClicked: settingMenu.popup()
     }
@@ -72,7 +72,7 @@ Rectangle {
 
             picHover: "qrc:/images/min_hover.png"
             picNormal: "qrc:/images/min_normal.png"
-            picPressed: "qrc:/images/min_pressed.png"
+            picPressed: "qrc:/images/min_hover.png"
 
             onClicked: mainWindow.showMinimized()
         }
@@ -103,7 +103,11 @@ Rectangle {
         picNormal: "qrc:/images/close_normal.png"
         picPressed: "qrc:/images/close_pressed.png"
 
-        onClicked: Qt.quit()
+        onClicked: {
+            mainWindow.showMinimized()
+            mainWindow.hide()
+            myTrayIcon.showMessage(title, qsTr("Click here to show main window!"))
+        }
     }
 
     Menu {

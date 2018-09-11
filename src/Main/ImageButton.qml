@@ -1,4 +1,5 @@
-import QtQuick 2.4
+import QtQuick 2.9
+import QtQuick.Controls 2.2
 
 Rectangle
 {
@@ -8,6 +9,7 @@ Rectangle
     property string picNormal: ""
     property string picHover: ""
     property string picPressed: ""
+    property string toolTip: ""
 
     signal clicked
 
