@@ -4,3 +4,4 @@
 QmlPluginDemo(Debug)/Main.exe
 *.user
 build-QmlPluginDemo-Desktop_Qt_5_11_1_MinGW_32bit-Debug
+build-QmlPluginDemo-Desktop_Qt_5_11_1_MinGW_32bit-Release
