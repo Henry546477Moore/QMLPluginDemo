@@ -7,13 +7,9 @@
         <file>resizeqmlwindow.h</file>
         <file>ResizeWidget.qml</file>
         <file>MainWindowStatusBar.qml</file>
-        <file>FontButton.qml</file>
         <file>MainWindowTitleBar.qml</file>
         <file>ContentWidget.qml</file>
-        <file>ToolBtn.qml</file>
         <file>MainWidget.qml</file>
-        <file>LabelBtn.qml</file>
-        <file>ImageButton.qml</file>
         <file>images/close_hover.png</file>
         <file>images/close_normal.png</file>
         <file>images/close_pressed.png</file>
@@ -72,11 +68,19 @@
         <file>images/logout_normal32x32.png</file>
         <file>images/skin_hover32x32.png</file>
         <file>images/skin_normal32x32.png</file>
-        <file>CommonTitleBar.qml</file>
         <file>BackgroundMrgView.qml</file>
         <file>BackgroundColorDelegate.qml</file>
         <file>BackgroundImageDelete.qml</file>
         <file>images/addcolor_32x32.png</file>
         <file>images/addimg_32x32.png</file>
+        <file>controls/CommonTitleBar.qml</file>
+        <file>controls/FontButton.qml</file>
+        <file>controls/ImageButton.qml</file>
+        <file>controls/LabelBtn.qml</file>
+        <file>controls/PagerControl.qml</file>
+        <file>controls/ToolBtn.qml</file>
+        <file>systemconfiginfo.cpp</file>
+        <file>systemconfiginfo.h</file>
+        <file>controls/MyToolTip.qml</file>
     </qresource>
 </RCC>

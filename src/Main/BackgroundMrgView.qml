@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+import "controls" as MyControls
 
 Item {
     id: root
@@ -47,7 +48,7 @@ Item {
 
     ColumnLayout {
 
-        CommonTitleBar {
+        MyControls.CommonTitleBar {
             id: titleBar
             anchors.top: parent.top
             width: root.width
@@ -74,7 +75,7 @@ Item {
                 opacity: appConfig.backgroundOpacity
             }
 
-            ImageButton {
+            MyControls.ImageButton {
                 id: addImg
                 height: 35
 
@@ -85,7 +86,7 @@ Item {
 
                 onClicked: fileDialog.open()
             }
-            ImageButton {
+            MyControls.ImageButton {
                 id: addColor
                 height: 35
                 anchors.left: addImg.right

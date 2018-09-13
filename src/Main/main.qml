@@ -1,5 +1,5 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.11
+import QtQuick.Controls 2.3
 import QtQuick.Window 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
@@ -99,15 +99,11 @@ ApplicationWindow {
         }
 
         menu: Menu {
-            Button {
-                text: qsTr("test")
-            }
             MenuItem {
                 text: qsTr("Quit")
                 onTriggered: Qt.quit()
             }
         }
-
     }
 
     Component.onCompleted: {

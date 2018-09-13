@@ -1,7 +1,7 @@
-*.stash
-*.o
-QmlPluginDemo(Debug)
-QmlPluginDemo(Release)
-*.user
 build-QmlPluginDemo-Desktop_Qt_5_11_1_MinGW_32bit-Debug
 build-QmlPluginDemo-Desktop_Qt_5_11_1_MinGW_32bit-Release
+QmlPluginDemo(Debug)
+QmlPluginDemo(Release)
+*.stash
+*.o
+*.user

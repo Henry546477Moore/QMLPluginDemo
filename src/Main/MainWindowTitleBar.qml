@@ -1,7 +1,8 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
+import QtQuick 2.11
+import QtQuick.Controls 2.3
 import QtQuick.Window 2.3
 import QtQuick.Layouts 1.3
+import "controls" as MyControls
 
 Rectangle {
     id:root
@@ -23,7 +24,7 @@ Rectangle {
         text: root.title
     }
 
-    ImageButton {
+    MyControls.ImageButton {
         id:loginBtn
         anchors.right: loginTip.left
 
@@ -40,11 +41,11 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: -20
         anchors.rightMargin: 10
-        text: qsTr("请登录")
+        text: qsTr("Please login")
         color: "white"
     }
 
-    ImageButton {
+    MyControls.ImageButton {
         id:skinBtn
         anchors.right: settingBtn.left
 
@@ -54,7 +55,7 @@ Rectangle {
 
         onClicked: skinPopup.open()
     }
-    ImageButton {
+    MyControls.ImageButton {
         id:settingBtn
         anchors.right: minBtn.left
 
@@ -66,7 +67,7 @@ Rectangle {
     }
 
 
-    ImageButton {
+    MyControls.ImageButton {
             id:minBtn
             anchors.right: maxBtn.left
 
@@ -78,7 +79,7 @@ Rectangle {
         }
 
 
-    ImageButton {
+    MyControls.ImageButton {
         id:maxBtn
         anchors.topMargin: 14
         anchors.right: closeBtn.left
@@ -94,7 +95,7 @@ Rectangle {
         onClicked: root.maxUndoFun()
     }
 
-    ImageButton {
+    MyControls.ImageButton {
         id:closeBtn
         anchors.right: parent.right
         anchors.rightMargin: 2
@@ -113,17 +114,90 @@ Rectangle {
     Menu {
         id: settingMenu
 
-        Menu {
-            title: qsTr("Languate")
+        Action {
+            text: qsTr("English")
+            checkable: true
+            checked: "en_US" == appConfig.currentLanguage
+            onTriggered: appConfig.setCurrentLanguage("en_US")
+        }
+        Action {
+            text: qsTr("Chinese")
+            checkable: true
+            checked: "zh_CN" == appConfig.currentLanguage
+            onTriggered: appConfig.setCurrentLanguage("zh_CN")
+        }
 
-            MenuItem {
-                text: qsTr("English")
-                onTriggered: appConfig.setCurrentLanguage("en_US")
+        topPadding: 2
+        bottomPadding: 2
+
+        delegate: MenuItem {
+            id: menuItem
+            implicitWidth: 120
+            implicitHeight: 30
+
+            arrow: Canvas {
+                x: parent.width - width
+                implicitWidth: 30
+                implicitHeight: 30
+                visible: menuItem.subMenu
+                onPaint: {
+                    var ctx = getContext("2d")
+                    ctx.fillStyle = menuItem.highlighted ? "#ffffff" : "#21be2b"
+                    ctx.moveTo(10, 10)
+                    ctx.lineTo(width - 10, height / 2)
+                    ctx.lineTo(10, height - 10)
+                    ctx.closePath()
+                    ctx.fill()
+                }
             }
-            MenuItem {
-                text: qsTr("Chinese")
-                onTriggered: appConfig.setCurrentLanguage("zh_CN")
+
+            indicator: Item {
+                implicitWidth: 30
+                implicitHeight: 30
+                Rectangle {
+                    width: 20
+                    height: 20
+                    anchors.centerIn: parent
+                    visible: menuItem.checkable
+                    border.color: "#21be2b"
+                    radius: 3
+                    Rectangle {
+                        width: 10
+                        height: 10
+                        anchors.centerIn: parent
+                        visible: menuItem.checked
+                        color: "#21be2b"
+                        radius: 2
+                    }
+                }
             }
+
+            contentItem: Text {
+                leftPadding: menuItem.indicator.width
+                rightPadding: menuItem.arrow.width
+                text: menuItem.text
+                font: menuItem.font
+                opacity: enabled ? 1.0 : 0.3
+                color: menuItem.highlighted ? "#ffffff" : "#21be2b"
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            background: Rectangle {
+                implicitWidth: 120
+                implicitHeight: 30
+                opacity: enabled ? 1 : 0.3
+                color: menuItem.highlighted ? "#21be2b" : "transparent"
+            }
+        }
+
+        background: Rectangle {
+            implicitWidth: 120
+            implicitHeight: 30
+            color: "#ffffff"
+            border.color: "#21be2b"
+            radius: 2
         }
     }
 
@@ -176,7 +250,7 @@ Rectangle {
         }
         else
         {
-            loginTip.text = qsTr("请“登录")
+            loginTip.text = qsTr("Please login")
             loginBtn.picHover = "qrc:/images/loginu_hover.png"
             loginBtn.picNormal = "qrc:/images/loginu_normal.png"
             loginBtn.picPressed = "qrc:/images/loginu_pressed.png"

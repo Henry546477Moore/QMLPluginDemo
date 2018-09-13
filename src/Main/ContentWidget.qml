@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.4
+import "controls" as MyControls
 
 Rectangle
 {
@@ -43,7 +44,7 @@ Rectangle
                 tabwidget.currentChanged(toolbar.current)
             }
 
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:0
                 state:"checked"     //第一个是按下状态，默认显示第一个界面
@@ -51,49 +52,49 @@ Rectangle
                 btnText:"电脑体检"
                 onClicked:toolbar.current=btnIndex
             }
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:1
                 picSrc: "images/ico_dsmain.png"
                 btnText:"木马查杀"
                 onClicked:toolbar.current=btnIndex
             }
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:2
                 picSrc: "images/ico_SysRepair.png"
                 btnText:"系统修复"
                 onClicked:toolbar.current=btnIndex
             }
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:3
                 picSrc: "images/ico_TraceCleaner.png"
                 btnText:"电脑清理"
                 onClicked:toolbar.current=btnIndex
             }
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:4
                 picSrc: "images/ico_SpeedupOpt.png"
                 btnText:"优化加速"
                 onClicked:toolbar.current=btnIndex
             }
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:5
                 picSrc: "images/ico_expert.png"
                 btnText:"电脑专家"
                 onClicked:toolbar.current=btnIndex
             }
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:6
                 picSrc: "images/ico_diannaomenzhen.png"
                 btnText:"电脑门诊"
                 onClicked:toolbar.current=btnIndex
             }
-            ToolBtn
+            MyControls.ToolBtn
             {
                 index:7
                 picSrc: "images/ico_softmgr.png"
@@ -297,7 +298,7 @@ Rectangle
                             columnSpacing: 20
                             anchors.margins: 20
 
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 width: 20
                                 height:20
@@ -306,7 +307,7 @@ Rectangle
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 width: 20
                                 height:20
@@ -315,7 +316,7 @@ Rectangle
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 width: 20
                                 height:20
@@ -324,7 +325,7 @@ Rectangle
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 width: 20
                                 height:20
@@ -333,7 +334,7 @@ Rectangle
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 width: 20
                                 height:20
@@ -342,7 +343,7 @@ Rectangle
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 width: 20
                                 height:20
@@ -384,9 +385,9 @@ Rectangle
                                 anchors.leftMargin: 5
                             }
 
-                            ToolButton {
+                            MyControls.ToolBtn {
                                 id:middleBtn
-                                text:"更多"
+                                btnText:"更多"
                                 Layout.preferredWidth: 32
                                 Layout.preferredHeight: 20
 
@@ -394,21 +395,21 @@ Rectangle
                                 anchors.rightMargin: 5
 
                                 //必须包含  import QtQuick.Controls.Styles 1.4
-                                style: ButtonStyle {
-                                    background: Rectangle {
-                                        implicitWidth: 100
-                                        implicitHeight: 25
-                                        //border.width: control.activeFocus ? 2 : 1
-                                        border.color: "#888"
-                                        radius: 4
-                                        color: "transparent"
-                                        border.width: 0  //用于去除边框
-                                        gradient: Gradient {
-                                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
-                                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                                        }
-                                    }
-                                }
+//                                style: ButtonStyle {
+//                                    background: Rectangle {
+//                                        implicitWidth: 100
+//                                        implicitHeight: 25
+//                                        //border.width: control.activeFocus ? 2 : 1
+//                                        border.color: "#888"
+//                                        radius: 4
+//                                        color: "transparent"
+//                                        border.width: 0  //用于去除边框
+//                                        gradient: Gradient {
+//                                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
+//                                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+//                                        }
+//                                    }
+//                                }
                             }
                         }
                     }
@@ -429,63 +430,63 @@ Rectangle
                             columnSpacing: 20
                             anchors.margins: 30
 
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/jingling.png"
                                 text:"健康精灵"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/upan.png"
                                 text:"U盘鉴定器"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/zhuomian.png"
                                 text:"安全桌面"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/youxi.png"
                                 text:"游戏盒子"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/shouji.png"
                                 text:"手机助手"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/ludashi.png"
                                 text:"鲁大师"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/ruanjian.png"
                                 text:"360小助手"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/zhuangji.png"
                                 text:"一键装机"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
-                            LabelBtn
+                            MyControls.LabelBtn
                             {
                                 picSrc: "images/weishi.png"
                                 text:"手机卫士"
