@@ -7,7 +7,7 @@ Button {
 
     property string toolTip: ""
 
-    ToolTip.visible: down
+    ToolTip.visible: hovered
     ToolTip.text: toolTip
 
     contentItem: Text {
@@ -26,7 +26,7 @@ Button {
      opacity: enabled ? 1 : 0.3
      //border.color: control.down ? "#17a81a" : "#21be2b"
      border.width: 1
-     color: control.hovered ? "blue" : (control.down ? "blue" : "lightblue")
+     color: control.hovered ? "#4e9d4e" : (control.down ? "#4e9d4e" : "#32dd6f")
      radius: 2
     }
 }

@@ -7,6 +7,7 @@ Item {
     property int pageIndex: 0
     property int pageSize: 100
     property int pageCount: 0
+    property alias pageSizeVisible: cbPageSize.visible
 
     signal pageChanged
 
@@ -31,7 +32,7 @@ Item {
 
     CommonButton {
         id: btnFirst
-        anchors.left: cbPageSize.right
+        anchors.left: cbPageSize.visible? cbPageSize.right : pagerInfo.right
         anchors.leftMargin: 5
         text: "<<"
         toolTip: qsTr("Jump to first page")
@@ -92,7 +93,7 @@ Item {
     }
 
     Component.onCompleted: {
-        setTotalCount(mTotalCount)
+        updatePageInfo()
         translator()
     }
 

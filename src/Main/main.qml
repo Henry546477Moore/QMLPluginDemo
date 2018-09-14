@@ -21,15 +21,16 @@ ApplicationWindow {
     }
 
     Rectangle {
+        id: bgRect
         anchors.fill: parent
         visible: !appConfig.isUseBackgroundImg
-        color: appConfig.backgroundSource
+        color: bgRect.visible ? appConfig.backgroundSource : ""
     }
 
     Image {
         id: image
         anchors.fill: parent
-        source: appConfig.backgroundSource
+        source: appConfig.isUseBackgroundImg ? appConfig.backgroundSource : ""
         fillMode: Image.PreserveAspectCrop
         visible: false
     }
@@ -47,6 +48,7 @@ ApplicationWindow {
     }
 
     OpacityMask {
+        id: bgImgMask
         anchors.fill: image
         source: image
         maskSource: mask

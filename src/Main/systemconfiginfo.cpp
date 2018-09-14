@@ -117,7 +117,7 @@ QString SystemConfigInfo::backgroundSource()
     return m_backgroundSource;
 }
 
-void SystemConfigInfo::setBackgroundSource(const QString &backgroundSource)
+void SystemConfigInfo::setCurrentBackgroundSource(const QString &backgroundSource)
 {
     if(backgroundSource != m_backgroundSource)
     {
@@ -160,7 +160,7 @@ void SystemConfigInfo::setBackgroundSource(QObject *source)
 {
     BackgroundSource *bgSource = dynamic_cast<BackgroundSource *>(source);
     setIsUseBackgroundImg(bgSource->isImgSource());
-    setBackgroundSource(bgSource->source());
+    setCurrentBackgroundSource(bgSource->source());
 }
 
 

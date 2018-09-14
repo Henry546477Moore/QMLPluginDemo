@@ -14,15 +14,16 @@ Item {
     height: 500
 
     Rectangle {
+        id: bgRect
         anchors.fill: parent
         visible: !appConfig.isUseBackgroundImg
-        color: appConfig.backgroundSource
+        color: bgRect.visible ? appConfig.backgroundSource : ""
     }
 
     Image {
         id: image
         anchors.fill: parent
-        source: appConfig.backgroundSource
+        source: appConfig.isUseBackgroundImg ? appConfig.backgroundSource : ""
         fillMode: Image.PreserveAspectCrop
         visible: false
     }
@@ -40,6 +41,7 @@ Item {
     }
 
     OpacityMask {
+        id: imgMask
         anchors.fill: image
         source: image
         maskSource: mask
@@ -100,7 +102,7 @@ Item {
             Slider {
                 id: sliderBgOpacity
                 width: root.width - 20
-                anchors.top: addImg.bottom
+                anchors.top: addColor.bottom
                 anchors.horizontalCenter: root.horizontalCenter
                 height: 30
                 stepSize: 0.1
@@ -137,6 +139,7 @@ Item {
                 clip: true
                 ColumnLayout {
                     Flow {
+                        id: flow
                         width: root.width
                         Repeater {
                             id:lstColors
@@ -174,9 +177,9 @@ Item {
     }
 
     Component.onCompleted: {
-        console.log(appConfig.listSources)
         var totalCount = appConfig.listSources.length;
-        myPage.pageSize = 9
+        myPage.pageSize = 12
+        myPage.pageSizeVisible = false
         myPage.mTotalCount = totalCount
         myPage.updatePageInfo()
         queryBackgroundSource()
@@ -201,7 +204,7 @@ Item {
         if(end > totalCount) {
             end = totalCount
         }
-        console.log("start: %1, end%2", start, end)
         lstColors.model = appConfig.listSources.slice(start, end)
+        flow.width = root.width
     }
 }
