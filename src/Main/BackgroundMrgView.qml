@@ -11,7 +11,7 @@ Item {
     signal closed
 
     width: 600
-    height: 400
+    height: 500
 
     Rectangle {
         anchors.fill: parent
@@ -50,7 +50,6 @@ Item {
 
         MyControls.CommonTitleBar {
             id: titleBar
-            anchors.top: parent.top
             width: root.width
             height: 32
             showMinBtn: false
@@ -64,13 +63,12 @@ Item {
         Item {
             id: content
             anchors.top: titleBar.bottom
-            anchors.bottom: root.bottom
+            width: root.width
+            height: root.height - titleBar.height
 
             Rectangle {
                 id: contentBackground
-                width: root.width
-                height: root.height - titleBar.height
-                //anchors.top: titleBar.bottom
+                anchors.fill: parent
                 color: "white"
                 opacity: appConfig.backgroundOpacity
             }
@@ -133,27 +131,27 @@ Item {
             }
 
             ScrollView {
+                id: contentView
                 anchors.top: sliderBgOpacity.bottom
-                height: root.height - titleBar.height - sliderBgOpacity.height - addColor.height - 5
+                height: parent.height - sliderBgOpacity.height - addColor.height - myPage.height - 5
                 clip: true
                 ColumnLayout {
                     Flow {
                         width: root.width
                         Repeater {
                             id:lstColors
-                            model :appConfig.listBackgroundColors
-                            delegate: BackgroundColorDelegate {}
-                        }
-                    }
-                    Flow {
-                        width: root.width
-                        Repeater {
-                            id:lstImages
-                            model :appConfig.listBackgroundImgs
-                            delegate: BackgroundImageDelete {}
+                            delegate: BackgroundDelete {}
                         }
                     }
                 }
+            }
+
+            MyControls.PagerControl {
+                id: myPage
+                anchors.top: contentView.bottom
+                height: 35
+                mTotalCount: 105
+                onPageChanged: queryBackgroundSource()
             }
         }
     }
@@ -173,5 +171,37 @@ Item {
         title: qsTr("Choice the color as system background color source")
         color: "#aaaaaa"
         onAccepted: appConfig.addBackgroundSource(false, color)
+    }
+
+    Component.onCompleted: {
+        console.log(appConfig.listSources)
+        var totalCount = appConfig.listSources.length;
+        myPage.pageSize = 9
+        myPage.mTotalCount = totalCount
+        myPage.updatePageInfo()
+        queryBackgroundSource()
+    }
+
+    function queryBackgroundSource() {
+        var totalCount = appConfig.listSources.length
+        var pageSize = myPage.pageSize
+        if(pageSize < 1) {
+            pageSize = 100
+        }
+        var pageCount = (totalCount + pageSize - 1) / pageSize
+        var pageIndex = myPage.pageIndex
+        if(pageIndex < 0){
+            pageIndex = 0
+        }
+        else if(pageIndex >= pageCount) {
+            pageIndex = pageCount - 1
+        }
+        var start = pageIndex * pageSize
+        var end = start + pageSize
+        if(end > totalCount) {
+            end = totalCount
+        }
+        console.log("start: %1, end%2", start, end)
+        lstColors.model = appConfig.listSources.slice(start, end)
     }
 }

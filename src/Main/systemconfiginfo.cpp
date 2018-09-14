@@ -13,19 +13,19 @@ SystemConfigInfo::SystemConfigInfo(QObject *parent) : QObject(parent)
 
 void SystemConfigInfo::readConfig()
 {
+    QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
     QFile f(m_sysConfigPath);
     if(!f.exists())
     {
-        QSettings *set1 = new QSettings(m_sysConfigPath, QSettings::IniFormat);
 
-        set1->setValue("/background/language", "zh_CN");
-        set1->setValue("/background/use_image", false);
-        set1->setValue("/background/current_source", "#006699");
-        set1->setValue("/background/source_opacity", 0.8);
-        set1->setValue("/background/image_dir", "Images/Background");
-        set1->setValue("/background/colors", "#000099;#003399;#006699;#006600;#009900;#006633;#009933;#006666;#009966;#009999;#0000cc;#0033cc");
+        set->setValue("/background/language", "zh_CN");
+        set->setValue("/background/use_image", false);
+        set->setValue("/background/current_source", "#006699");
+        set->setValue("/background/source_opacity", 0.8);
+        set->setValue("/background/image_dir", "Images/Background");
+        set->setValue("/background/colors", "#000099;#003399;#006699;#006600;#009900;#006633;#009933;#006666;#009966;#009999;#0000cc;#0033cc");
     }
-    QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
+
     QString _language = set->value("/background/language", "zh_CN").toString();
     m_isUseBackgroundImg = set->value("/background/use_image", false).toBool();
     m_backgroundSource = set->value("/background/current_source", "#006699").toString();
@@ -34,7 +34,7 @@ void SystemConfigInfo::readConfig()
     QString colors = set->value("/background/colors", "#006699").toString();
     delete set;
 
-    m_listBackgroundImgs.clear();
+    m_listSources.clear();
     m_imgDirPath = QString("%1/%2").arg(QCoreApplication::applicationDirPath()).arg(m_imgDirPath);
     QDir dir(m_imgDirPath);
     if(dir.exists())
@@ -47,15 +47,17 @@ void SystemConfigInfo::readConfig()
         if(lstFiles.count() > 0)
         {
             foreach (QString p, lstFiles) {
-                m_listBackgroundImgs.push_back(QString("file:%1/%2").arg(m_imgDirPath).arg(p));
+                BackgroundSource *bgSource = new BackgroundSource(true, QString("file:%1/%2").arg(m_imgDirPath).arg(p));
+                m_listSources.push_back(bgSource);
             }
         }
     }
 
+
     QStringList strColors = colors.split(";");
-    m_listBackgroundColors.clear();
     foreach (QString color, strColors) {
-        m_listBackgroundColors.push_back(color);
+        BackgroundSource *bgSource = new BackgroundSource(false, color);
+        m_listSources.push_back(bgSource);
     }
 
     setCurrentLanguage(_language);
@@ -66,6 +68,7 @@ QString SystemConfigInfo::currentLanguage()
 {
     return m_currentLanguage;
 }
+
 QTranslator *trans = nullptr;
 void SystemConfigInfo::setCurrentLanguage(const QString &currentLanguage)
 {
@@ -113,6 +116,7 @@ QString SystemConfigInfo::backgroundSource()
 {
     return m_backgroundSource;
 }
+
 void SystemConfigInfo::setBackgroundSource(const QString &backgroundSource)
 {
     if(backgroundSource != m_backgroundSource)
@@ -147,20 +151,16 @@ void SystemConfigInfo::setBackgroundOpacity(const double &backgroundOpacity)
     }
 }
 
-QStringList SystemConfigInfo::listBackgroundImgs()
+QList<QObject *> SystemConfigInfo::listSources()
 {
-    return m_listBackgroundImgs;
+    return m_listSources;
 }
 
-QStringList SystemConfigInfo::listBackgroundColors()
+void SystemConfigInfo::setBackgroundSource(QObject *source)
 {
-    return m_listBackgroundColors;
-}
-
-void SystemConfigInfo::setBackgroundSource(const bool &isImg, const QString &source)
-{
-    setIsUseBackgroundImg(isImg);
-    setBackgroundSource(source);
+    BackgroundSource *bgSource = dynamic_cast<BackgroundSource *>(source);
+    setIsUseBackgroundImg(bgSource->isImgSource());
+    setBackgroundSource(bgSource->source());
 }
 
 
@@ -178,24 +178,46 @@ void SystemConfigInfo::addBackgroundSource(const bool &isImg, const QString &sou
         {
             QString fileName = QFileInfo(filePath).fileName();
             QString destPath = QString("%1/%2").arg(m_imgDirPath).arg(fileName);
-            if(!m_listBackgroundImgs.contains(destPath))
+            if(!existSource(destPath))
             {
                 f.copy(destPath);
-                m_listBackgroundImgs.push_front(QString("file:%1").arg(destPath));
-                emit listBackgroundImgsChanged();
+                BackgroundSource *bgSource = new BackgroundSource(true, QString("file:%1").arg(destPath));
+                m_listSources.push_front(bgSource);
+
+                emit listSourcesChanged();
             }
         }
     }
     else
     {
-        if(!m_listBackgroundColors.contains(source))
+        if(!existSource(source))
         {
-            m_listBackgroundColors.push_front(source);
+            BackgroundSource *bgSource = new BackgroundSource(false, source);
+            m_listSources.push_front(bgSource);
 
             QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
-            set->setValue("/background/colors", m_listBackgroundColors.join(";"));
 
-            emit listBackgroundColorsChanged();
+            QString colors = set->value("/background/colors", "#006699").toString();
+            QStringList lstColors = colors.split(";");
+            lstColors.push_front(source);
+            set->setValue("/background/colors", lstColors.join(";"));
+            delete set;
+
+            emit listSourcesChanged();
         }
     }
+}
+
+bool SystemConfigInfo::existSource(const QString &source)
+{
+    bool exist(false);
+
+    foreach (QObject *bgSource, m_listSources) {
+        if(source == dynamic_cast<BackgroundSource *>(bgSource)->source()) {
+            exist = true;
+            break;
+        }
+    }
+
+    return exist;
 }

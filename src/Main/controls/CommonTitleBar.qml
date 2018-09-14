@@ -17,7 +17,6 @@ Rectangle {
         id: cusTitle
         anchors.left: parent.left
         anchors.leftMargin: 15
-        anchors.top: parent.top
         anchors.verticalCenter: parent.verticalCenter
         color: "white"
         font.pixelSize: 18

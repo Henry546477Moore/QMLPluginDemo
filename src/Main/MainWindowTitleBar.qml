@@ -211,7 +211,7 @@ Rectangle {
             opacity: 0.8
             modal: true
             focus: true
-            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+            closePolicy: Popup.NoAutoClose
 
             BackgroundMrgView {
                 id: bgMrg

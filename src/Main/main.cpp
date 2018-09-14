@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+
     qmlRegisterType<SystemConfigInfo>("com.henrymoore", 1, 0, "SystemConfigInfo");
 
     int fontID = QFontDatabase::addApplicationFont(":/Fonts/fontawesome-webfont.ttf");

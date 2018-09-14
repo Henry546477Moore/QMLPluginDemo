@@ -69,8 +69,7 @@
         <file>images/skin_hover32x32.png</file>
         <file>images/skin_normal32x32.png</file>
         <file>BackgroundMrgView.qml</file>
-        <file>BackgroundColorDelegate.qml</file>
-        <file>BackgroundImageDelete.qml</file>
+        <file>BackgroundDelete.qml</file>
         <file>images/addcolor_32x32.png</file>
         <file>images/addimg_32x32.png</file>
         <file>controls/CommonTitleBar.qml</file>
@@ -82,5 +81,6 @@
         <file>systemconfiginfo.cpp</file>
         <file>systemconfiginfo.h</file>
         <file>controls/MyToolTip.qml</file>
+        <file>controls/CommonButton.qml</file>
     </qresource>
 </RCC>

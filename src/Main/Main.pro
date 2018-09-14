@@ -14,7 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    systemconfiginfo.cpp
+    systemconfiginfo.cpp \
+    backgroundsource.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,6 +38,7 @@ CONFIG(debug, debug|release){
 
 HEADERS += \
     resizeqmlwindow.h \
-    systemconfiginfo.h
+    systemconfiginfo.h \
+    backgroundsource.h
 
 RC_ICONS = ./images/logo.ico
