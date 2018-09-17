@@ -17,8 +17,8 @@ void SystemConfigInfo::readConfig()
     QFile f(m_sysConfigPath);
     if(!f.exists())
     {
-
-        set->setValue("/background/language", "zh_CN");
+        set->setValue("/system/language", "zh_CN");
+        set->setValue("/system/title", "qml plugin application");
         set->setValue("/background/use_image", false);
         set->setValue("/background/current_source", "#006699");
         set->setValue("/background/source_opacity", 0.8);
@@ -26,7 +26,8 @@ void SystemConfigInfo::readConfig()
         set->setValue("/background/colors", "#000099;#003399;#006699;#006600;#009900;#006633;#009933;#006666;#009966;#009999;#0000cc;#0033cc");
     }
 
-    QString _language = set->value("/background/language", "zh_CN").toString();
+    QString _language = set->value("/system/language", "zh_CN").toString();
+    m_appTitle = set->value("/system/title", "qml plugin application").toString();
     m_isUseBackgroundImg = set->value("/background/use_image", false).toBool();
     m_backgroundSource = set->value("/background/current_source", "#006699").toString();
     m_backgroundOpacity = set->value("/background/source_opacity", 0.8).toDouble();
@@ -63,6 +64,10 @@ void SystemConfigInfo::readConfig()
     setCurrentLanguage(_language);
 }
 
+QString SystemConfigInfo::appTitle()
+{
+    return m_appTitle;
+}
 
 QString SystemConfigInfo::currentLanguage()
 {
@@ -77,7 +82,7 @@ void SystemConfigInfo::setCurrentLanguage(const QString &currentLanguage)
         m_currentLanguage = currentLanguage;
 
         QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
-        set->setValue("/background/language", m_currentLanguage);
+        set->setValue("/system/language", m_currentLanguage);
         delete set;
 
         if(trans == nullptr)

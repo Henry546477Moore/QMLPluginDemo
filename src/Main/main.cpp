@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     ResizeQmlWindow resize;
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/LoginView.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
 

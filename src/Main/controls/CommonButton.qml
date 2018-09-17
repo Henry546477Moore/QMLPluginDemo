@@ -26,7 +26,7 @@ Button {
      opacity: enabled ? 1 : 0.3
      //border.color: control.down ? "#17a81a" : "#21be2b"
      border.width: 1
-     color: control.hovered ? "#4e9d4e" : (control.down ? "#4e9d4e" : "#32dd6f")
+     color: control.hovered ? "#3CC3F5" : (control.down ? "#3CC3F5" : "#00A3FF")
      radius: 2
     }
 }

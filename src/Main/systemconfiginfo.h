@@ -18,6 +18,7 @@ class SystemConfigInfo : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString currentLanguage READ currentLanguage WRITE setCurrentLanguage NOTIFY currentLanguageChanged)
+    Q_PROPERTY(QString appTitle READ appTitle)
     Q_PROPERTY(bool isUseBackgroundImg READ isUseBackgroundImg WRITE setIsUseBackgroundImg NOTIFY isUseBackgroundImgChanged)
     Q_PROPERTY(QString backgroundSource READ backgroundSource NOTIFY backgroundSourceChanged)
     Q_PROPERTY(double backgroundOpacity READ backgroundOpacity WRITE setBackgroundOpacity NOTIFY backgroundOpacityChanged)
@@ -38,6 +39,8 @@ signals:
     void listSourcesChanged();
 
 private:
+    QString appTitle();
+
     QString currentLanguage();
 
     bool isUseBackgroundImg();
@@ -54,6 +57,7 @@ private:
     bool existSource(const QString &source);
 
 private:
+    QString m_appTitle;
     QString m_currentLanguage;
     bool m_isUseBackgroundImg;
     QString m_backgroundSource;

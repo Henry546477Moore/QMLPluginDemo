@@ -5,3 +5,4 @@ QmlPluginDemo(Release)
 *.stash
 *.o
 *.user
+*.qmlc

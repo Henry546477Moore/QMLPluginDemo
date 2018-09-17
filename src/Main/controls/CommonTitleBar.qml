@@ -5,10 +5,10 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     id:root
-    property bool  isMax: false     //标题栏最大化(还原)
+    property bool  isMax: false
     property alias showMinBtn: minBtn.visible
     property alias showMaxBtn: maxBtn.visible
-    property string title: "自定义窗体"   //标题栏
+    property string title: ""
     color: "transparent"
 
     signal closed
@@ -25,42 +25,51 @@ Rectangle {
         text: root.title
     }
 
-    ImageButton {
+    FontButton {
             id:minBtn
             anchors.right: maxBtn.left
 
-            picHover: "qrc:/images/min_hover.png"
-            picNormal: "qrc:/images/min_normal.png"
-            picPressed: "qrc:/images/min_pressed.png"
+            width: 32
+            height: 32
+
+            text: "\uf2d1"
+            bgcolorNormal: "transparent"
+            bgcolorHover: "#aaa"
+            bgcolorPressed: "#aaa"
 
             onClicked: mainWindow.showMinimized()
         }
 
 
-    ImageButton {
+    FontButton {
         id:maxBtn
         anchors.topMargin: 14
         anchors.right: closeBtn.left
         anchors.rightMargin: 2
         anchors.verticalCenter: parent.verticalCenter
-        width: 27
-        height: 22
+        width: 32
+        height: 32
 
-        picHover: "qrc:/images/max_hover.png"
-        picNormal: "qrc:/images/max_normal.png"
-        picPressed: "qrc:/images/max_pressed.png"
+        text: "\uf2d0"
+        bgcolorNormal: "transparent"
+        bgcolorHover: "#aaa"
+        bgcolorPressed: "#aaa"
 
         onClicked: root.maxUndoFun()
     }
 
-    ImageButton {
+    FontButton {
         id:closeBtn
         anchors.right: parent.right
         anchors.rightMargin: 2
 
-        picHover: "qrc:/images/close_hover.png"
-        picNormal: "qrc:/images/close_normal.png"
-        picPressed: "qrc:/images/close_pressed.png"
+        width: 32
+        height: 32
+
+        text: "\uf2d4"
+        bgcolorNormal: "transparent"
+        bgcolorHover: "red"
+        bgcolorPressed: "red"
 
         onClicked: root.closed()
     }
@@ -71,17 +80,13 @@ Rectangle {
         {
             mainWindow.showNormal()
 
-            maxBtn.picHover = "qrc:/images/max_hover.png"
-            maxBtn.picNormal = "qrc:/images/max_normal.png"
-            maxBtn.picPressed = "qrc:/images/max_pressed.png"
+            maxBtn.text = "\uf2d2"
         }
         else
         {
             mainWindow.showMaximized()
 
-            maxBtn.picHover = "qrc:/images/restore_hover.png"
-            maxBtn.picNormal = "qrc:/images/restore_normal.png"
-            maxBtn.picPressed = "qrc:/images/restore_pressed.png"
+            maxBtn.text = "\uf2d0"
         }
         isMax = !isMax
     }

@@ -17,14 +17,8 @@ Rectangle {
     color: fontButton.backgroundColor
     state: "normal"
 
-    /*
-    MyToolTip {
-        id: myTtoolTip
-        width: 50
-        target: fontButton
-        text: fontButton.toolTip
-    }
-    */
+    ToolTip.visible: hovered
+    ToolTip.text: toolTip
 
     Text {
         anchors.verticalCenter: parent.verticalCenter

@@ -80,7 +80,7 @@
         <file>controls/ToolBtn.qml</file>
         <file>systemconfiginfo.cpp</file>
         <file>systemconfiginfo.h</file>
-        <file>controls/MyToolTip.qml</file>
         <file>controls/CommonButton.qml</file>
+        <file>LoginView.qml</file>
     </qresource>
 </RCC>
