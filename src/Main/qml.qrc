@@ -82,5 +82,8 @@
         <file>systemconfiginfo.h</file>
         <file>controls/CommonButton.qml</file>
         <file>LoginView.qml</file>
+        <file>controls/MyMessageBox.qml</file>
+        <file>images/warning.png</file>
+        <file>CloseChoiceView.qml</file>
     </qresource>
 </RCC>

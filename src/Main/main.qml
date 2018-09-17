@@ -4,7 +4,6 @@ import QtQuick.Window 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
-import com.henrymoore 1.0
 import Qt.labs.platform 1.0
 
 ApplicationWindow {
@@ -14,11 +13,6 @@ ApplicationWindow {
     height: 640
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Window
-
-    SystemConfigInfo{
-        id: appConfig
-        onCurrentLanguageChanged: translator()
-    }
 
     Rectangle {
         id: bgRect

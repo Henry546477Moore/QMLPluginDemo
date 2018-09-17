@@ -4,6 +4,8 @@
 #include <QDir>
 #include <QFile>
 #include <QTranslator>
+#include <QByteArray>
+#include <QCryptographicHash>
 
 SystemConfigInfo::SystemConfigInfo(QObject *parent) : QObject(parent)
 {
@@ -19,6 +21,11 @@ void SystemConfigInfo::readConfig()
     {
         set->setValue("/system/language", "zh_CN");
         set->setValue("/system/title", "qml plugin application");
+        set->setValue("/system/user_name", stringToMD5("admin"));
+        set->setValue("/system/password", stringToMD5("123456"));
+        set->setValue("/system/close_type", 2);
+        set->setValue("/system/choice_manual", true);
+        set->setValue("/system/rember_close", false);
         set->setValue("/background/use_image", false);
         set->setValue("/background/current_source", "#006699");
         set->setValue("/background/source_opacity", 0.8);
@@ -28,6 +35,11 @@ void SystemConfigInfo::readConfig()
 
     QString _language = set->value("/system/language", "zh_CN").toString();
     m_appTitle = set->value("/system/title", "qml plugin application").toString();
+    m_userName = set->value("/system/user_name", stringToMD5("admin")).toString();
+    m_pwd = set->value("/system/password", stringToMD5("123456")).toString();
+    m_closeType = set->value("/system/close_type", 2).toInt();
+    m_choiceByMySelf = set->value("/system/choice_manual", true).toBool();
+    m_isRemberCloseType = set->value("/system/rember_close", false).toBool();
     m_isUseBackgroundImg = set->value("/background/use_image", false).toBool();
     m_backgroundSource = set->value("/background/current_source", "#006699").toString();
     m_backgroundOpacity = set->value("/background/source_opacity", 0.8).toDouble();
@@ -64,6 +76,19 @@ void SystemConfigInfo::readConfig()
     setCurrentLanguage(_language);
 }
 
+void SystemConfigInfo::setMainWindowCloseType(const int &closeType, const bool &choiceMySelf, const bool &isRemberType)
+{
+    m_closeType = closeType;
+    m_choiceByMySelf = choiceMySelf;
+    m_isRemberCloseType = isRemberType;
+
+    QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
+    set->setValue("/system/close_type", m_closeType);
+    set->setValue("/system/choice_manual", m_choiceByMySelf);
+    set->setValue("/system/rember_close", m_isRemberCloseType);
+    delete set;
+}
+
 QString SystemConfigInfo::appTitle()
 {
     return m_appTitle;
@@ -74,28 +99,35 @@ QString SystemConfigInfo::currentLanguage()
     return m_currentLanguage;
 }
 
+int SystemConfigInfo::closeType()
+{
+    return m_closeType;
+}
+
+bool SystemConfigInfo::manualChoiceCloseType()
+{
+    return m_choiceByMySelf;
+}
+
+bool SystemConfigInfo::remberCloseType()
+{
+    return m_isRemberCloseType;
+}
+
+bool SystemConfigInfo::invalidUser(const QString &userName, const QString &pwd)
+{
+    QString userNameMD5 = stringToMD5(userName);
+    QString passwordMD5 = stringToMD5(pwd);
+    if(userNameMD5 == m_userName && passwordMD5 == m_pwd)
+    {
+        return true;
+    }
+    return false;
+}
+
 QTranslator *trans = nullptr;
 void SystemConfigInfo::setCurrentLanguage(const QString &currentLanguage)
 {
-    if(currentLanguage != m_currentLanguage)
-    {
-        m_currentLanguage = currentLanguage;
-
-        QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
-        set->setValue("/system/language", m_currentLanguage);
-        delete set;
-
-        if(trans == nullptr)
-        {
-            trans = new QTranslator;
-            qApp->installTranslator(trans);
-        }
-
-        QString languagePath(QString("%1/languages/%2.qm").arg(QCoreApplication::applicationDirPath()).arg(currentLanguage));
-        trans->load(languagePath);
-
-        emit currentLanguageChanged();
-    }
 }
 
 bool SystemConfigInfo::isUseBackgroundImg()
@@ -225,4 +257,19 @@ bool SystemConfigInfo::existSource(const QString &source)
     }
 
     return exist;
+}
+
+QString SystemConfigInfo::stringToMD5(const QString &source)
+{
+    //to md5 first
+    QByteArray byte = source.toLatin1();
+    QByteArray byteMd5 = QCryptographicHash::hash(byte, QCryptographicHash::Md5);
+    QString strMd5 = byteMd5.toHex();
+
+    //to md5 second
+    byte = strMd5.toLatin1();
+    byteMd5 = QCryptographicHash::hash(byte, QCryptographicHash::Md5);
+    strMd5 = byteMd5.toHex();
+
+    return strMd5;
 }

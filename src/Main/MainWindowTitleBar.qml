@@ -115,9 +115,21 @@ Rectangle {
         bgcolorPressed: "red"
 
         onClicked: {
-            mainWindow.showMinimized()
-            mainWindow.hide()
-            myTrayIcon.showMessage(title, qsTr("Click here to show main window!"))
+            if(appConfig.remberCloseType) {
+                if(appConfig.manualChoiceCloseType) {
+                    closeChoice.remberMyChoice = true
+                    closeChoice.closeType = 0
+                    closeChoice.choiceByMySelf = true
+                    closePopup.open()
+                }
+                else if(appConfig.closeType == 0) {
+                    Qt.quit()
+                }
+                else if(appConfig.closeType == 1) {
+                    minimizeWindow()
+                }
+            }
+
         }
     }
 
@@ -211,23 +223,56 @@ Rectangle {
         }
     }
 
-    Popup
-        {
-            id:skinPopup
-            contentWidth: bgMrg.implicitWidth
-            contentHeight: bgMrg.implicitHeight
-            x:(mainWindow.width - bgMrg.width) / 2
-            y:(mainWindow.height - bgMrg.height) / 2
-            opacity: 0.8
-            modal: true
-            focus: true
-            closePolicy: Popup.NoAutoClose
+    Popup {
+        id:skinPopup
+        contentWidth: bgMrg.implicitWidth
+        contentHeight: bgMrg.implicitHeight
+        x:(mainWindow.width - bgMrg.width) / 2
+        y:(mainWindow.height - bgMrg.height) / 2
+        opacity: 0.8
+        modal: true
+        focus: true
+        closePolicy: Popup.NoAutoClose
 
-            BackgroundMrgView {
-                id: bgMrg
-                onClosed: skinPopup.close()
+        BackgroundMrgView {
+            id: bgMrg
+            onClosed: skinPopup.close()
+        }
+    }
+
+
+    Popup{
+        id:closePopup
+        contentWidth: closeChoice.implicitWidth
+        contentHeight: closeChoice.implicitHeight
+        x:(mainWindow.width - closeChoice.width) / 2
+        y:(mainWindow.height - closeChoice.height) / 2
+        opacity: 0.8
+        modal: true
+        focus: true
+        closePolicy: Popup.NoAutoClose
+
+        CloseChoiceView {
+            id: closeChoice
+            onClosed: {
+                appConfig.setMainWindowCloseType(closeChoice.closeType, closeChoice.choiceByMySelf, closeChoice.remberMyChoice)
+                if(closeChoice.closeType == 0) {
+                    Qt.quit()
+                }
+                else if(closeChoice.closeType == 1) {
+                    minimizeWindow()
+                }
+
+                closePopup.close()
             }
         }
+    }
+
+    function minimizeWindow() {
+        mainWindow.showMinimized()
+        mainWindow.hide()
+        myTrayIcon.showMessage(title, qsTr("Click here to show main window!"))
+    }
 
     //最大化(还原)
     function maxUndoFun(){
