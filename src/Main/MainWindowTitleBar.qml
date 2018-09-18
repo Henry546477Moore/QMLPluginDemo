@@ -7,8 +7,8 @@ import "controls" as MyControls
 Rectangle {
     id:root
     //radius: 10
-    property bool  isMax: false     //标题栏最大化(还原)
-    property string title: "自定义窗体"   //标题栏
+    property bool  isMax: false
+    property string title
     color: "transparent"
     property bool isLogin: true
 
@@ -76,9 +76,7 @@ Rectangle {
             height: 32
 
             text: "\uf2d1"
-            bgcolorNormal: "transparent"
             bgcolorHover: "#aaa"
-            bgcolorPressed: "#aaa"
 
             onClicked: mainWindow.showMinimized()
         }
@@ -94,9 +92,7 @@ Rectangle {
         height: 32
 
         text: "\uf2d0"
-        bgcolorNormal: "transparent"
         bgcolorHover: "#aaa"
-        bgcolorPressed: "#aaa"
 
         onClicked: root.maxUndoFun()
     }
@@ -110,31 +106,44 @@ Rectangle {
         height: 32
 
         text: "\uf2d4"
-        bgcolorNormal: "transparent"
         bgcolorHover: "red"
-        bgcolorPressed: "red"
 
-        onClicked: {
-            if(appConfig.remberCloseType) {
-                if(appConfig.manualChoiceCloseType) {
-                    closeChoice.remberMyChoice = true
-                    closeChoice.closeType = 0
-                    closeChoice.choiceByMySelf = true
-                    closePopup.open()
-                }
-                else if(appConfig.closeType == 0) {
-                    Qt.quit()
-                }
-                else if(appConfig.closeType == 1) {
-                    minimizeWindow()
-                }
-            }
-
-        }
+        onClicked: doClose()
     }
 
     Menu {
         id: settingMenu
+
+        Action {
+            id: actMin
+            checkable: true
+            //exclusiveGroup: "closeType"
+            checked: {
+                if(appConfig.remberCloseType && appConfig.closeType == 1) {
+                    return true
+                }
+                return false
+            }
+        }
+
+        Action {
+            id: actClose
+            checkable: true
+            //GroupBox: "closeType"
+            checked: {
+                if(appConfig.remberCloseType && appConfig.closeType == 0) {
+                    return true
+                }
+                return false
+            }
+        }
+
+        Action {
+            id: actChoice
+            checkable: true
+            //GroupBox: "closeType"
+            checked: !appConfig.remberCloseType
+        }
 
         Action {
             text: qsTr("English")
@@ -254,8 +263,8 @@ Rectangle {
 
         CloseChoiceView {
             id: closeChoice
-            onClosed: {
-                appConfig.setMainWindowCloseType(closeChoice.closeType, closeChoice.choiceByMySelf, closeChoice.remberMyChoice)
+            onChoiceAndClose: {
+                appConfig.setMainWindowCloseType(closeChoice.closeType, closeChoice.remberMyChoice)
                 if(closeChoice.closeType == 0) {
                     Qt.quit()
                 }
@@ -265,6 +274,22 @@ Rectangle {
 
                 closePopup.close()
             }
+        }
+    }
+
+    function doClose() {
+        if(appConfig.remberCloseType) {
+            if(appConfig.closeType == 0) {
+                Qt.quit()
+            }
+            else if(appConfig.closeType == 1) {
+                minimizeWindow()
+            }
+        }
+        else {
+            closeChoice.remberMyChoice = false
+            closeChoice.closeType = 0
+            closePopup.open()
         }
     }
 
@@ -280,13 +305,15 @@ Rectangle {
         {
             mainWindow.showNormal()
 
-            maxBtn.text = "\uf2d2"
+            maxBtn.text = "\uf2d0"
+            maxBtn.toolTip = qsTr("Maximization")
         }
         else
         {
             mainWindow.showMaximized()
 
-            maxBtn.text = "\uf2d0"
+            maxBtn.text = "\uf2d2"
+            maxBtn.toolTip = qsTr("Restore")
         }
         isMax = !isMax
     }
@@ -307,6 +334,31 @@ Rectangle {
             loginBtn.picPressed = "qrc:/images/loginu_pressed.png"
         }
         isLogin = !isLogin
+    }
+
+    function dillCloseSetting() {
+        var closeType = 0
+        var saveClose = false
+        if(actMin.checked || actClose.checked) {
+            saveClose = true
+            closeType = actClose.checked ? 0 : 1
+        }
+
+        appConfig.setMainWindowCloseType(closeType, saveClose)
+    }
+
+    Component.onCompleted: {
+
+        translator()
+    }
+
+    function translator() {
+        minBtn.toolTip = qsTr("Minimize")
+        maxBtn.toolTip = qsTr("Maximization")
+        closeBtn.toolTip = qsTr("Close")
+        actMin.text = qsTr("When click close to Minimize to System Tray")
+        actClose.text = qsTr("When click close to Exit system")
+        actChoice.text = qsTr("When click close let me Choice")
     }
 }
 

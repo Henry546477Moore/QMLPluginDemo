@@ -4,8 +4,6 @@
         <file>Fonts/font-awesome.css</file>
         <file>Fonts/fontawesome-webfont.ttf</file>
         <file>main.cpp</file>
-        <file>resizeqmlwindow.h</file>
-        <file>ResizeWidget.qml</file>
         <file>MainWindowStatusBar.qml</file>
         <file>MainWindowTitleBar.qml</file>
         <file>ContentWidget.qml</file>
@@ -85,5 +83,6 @@
         <file>controls/MyMessageBox.qml</file>
         <file>images/warning.png</file>
         <file>CloseChoiceView.qml</file>
+        <file>SystemSettingView.qml</file>
     </qresource>
 </RCC>

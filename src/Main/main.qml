@@ -49,36 +49,44 @@ ApplicationWindow {
         visible: appConfig.isUseBackgroundImg
     }
 
-    ResizeWidget {
-        z: 1
-        enableSize: 8
+    MouseArea{
         anchors.fill: parent
-        //color: "transparent"
-        ColumnLayout {
-            id:mainLayout
-            anchors.fill: parent
-            spacing: 0
-            //title bar
-            MainWindowTitleBar {
-                id:titleBar
-                title: mainWindow.title
-                height: 32
-                Layout.fillWidth: true
-            }
-            //center content area
-            ContentWidget{
-                id:contentWidget
+        acceptedButtons: Qt.LeftButton
+        property point cliCkPos: "0,0"
+        onPressed: {
+            cliCkPos = Qt.point(mouse.x, mouse.y)
+        }
+        onPositionChanged: {
+            var delta = Qt.point(mouse.x - cliCkPos.x, mouse.y - cliCkPos.y)
+            mainWindow.x = (mainWindow.x + delta.x)
+            mainWindow.y = (mainWindow.y + delta.y)
+        }
+    }
 
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                //color: "red"
-            }
-            //status bar
-            MainWindowStatusBar {
-                id:statusBar
-                height: 32
-                Layout.fillWidth: true
-            }
+    ColumnLayout {
+        id:mainLayout
+        anchors.fill: parent
+        spacing: 0
+        //title bar
+        MainWindowTitleBar {
+            id:titleBar
+            title: mainWindow.title
+            height: 32
+            Layout.fillWidth: true
+        }
+        //center content area
+        ContentWidget{
+            id:contentWidget
+
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            //color: "red"
+        }
+        //status bar
+        MainWindowStatusBar {
+            id:statusBar
+            height: 32
+            Layout.fillWidth: true
         }
     }
 
@@ -104,6 +112,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         translator()
+
     }
 
     function translator() {

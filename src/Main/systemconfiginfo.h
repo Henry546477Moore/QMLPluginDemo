@@ -19,9 +19,8 @@ class SystemConfigInfo : public QObject
 
     Q_PROPERTY(QString currentLanguage READ currentLanguage WRITE setCurrentLanguage NOTIFY currentLanguageChanged)
     Q_PROPERTY(QString appTitle READ appTitle)
-    Q_PROPERTY(int closeType READ closeType)
-    Q_PROPERTY(bool manualChoiceCloseType READ manualChoiceCloseType)
-    Q_PROPERTY(bool remberCloseType READ remberCloseType)
+    Q_PROPERTY(int closeType READ closeType NOTIFY closeTypeChanged)
+    Q_PROPERTY(bool remberCloseType READ remberCloseType NOTIFY remberCloseTypeChanged)
     Q_PROPERTY(bool isUseBackgroundImg READ isUseBackgroundImg WRITE setIsUseBackgroundImg NOTIFY isUseBackgroundImgChanged)
     Q_PROPERTY(QString backgroundSource READ backgroundSource NOTIFY backgroundSourceChanged)
     Q_PROPERTY(double backgroundOpacity READ backgroundOpacity WRITE setBackgroundOpacity NOTIFY backgroundOpacityChanged)
@@ -34,11 +33,13 @@ public:
     Q_INVOKABLE void addBackgroundSource(const bool &isImg, const QString &source);
     Q_INVOKABLE void setBackgroundOpacity(const double &backgroundOpacity);
     Q_INVOKABLE bool invalidUser(const QString &userName, const QString &pwd);
-    Q_INVOKABLE void setMainWindowCloseType(const int &closeType, const bool &choiceMySelf, const bool &isRemberType);
+    Q_INVOKABLE void setMainWindowCloseType(const int &closeType, const bool &isRemberType);
 
 signals:
     void currentLanguageChanged();
     void isUseBackgroundImgChanged();
+    void closeTypeChanged();
+    void remberCloseTypeChanged();
     void backgroundSourceChanged();
     void backgroundOpacityChanged();
     void listSourcesChanged();
@@ -49,7 +50,6 @@ private:
     QString currentLanguage();
 
     int closeType();
-    bool manualChoiceCloseType();
     bool remberCloseType();
 
     bool isUseBackgroundImg();
@@ -72,7 +72,6 @@ private:
     QString m_userName;
     QString m_pwd;
     int m_closeType;
-    bool m_choiceByMySelf;
     bool m_isRemberCloseType;
     QString m_currentLanguage;
     bool m_isUseBackgroundImg;

@@ -37,7 +37,6 @@ CONFIG(debug, debug|release){
 }
 
 HEADERS += \
-    resizeqmlwindow.h \
     systemconfiginfo.h \
     backgroundsource.h
 

@@ -47,6 +47,7 @@ Item {
                 anchors.fill: parent
                 anchors.centerIn: parent
                 font.family: "Microsoft Yahei"
+                font.pixelSize: 12
                 color: "gray"
                 text: tipText
                 wrapMode: Text.WordWrap
@@ -61,26 +62,11 @@ Item {
             border.color: backGroundColor
             color: backGroundColor
             radius: 5
-            Button {
+            CommonButton {
+                id: btnOK
                 anchors.centerIn: parent
                 width: 80
                 height: 30
-                background: Rectangle {
-                    anchors.centerIn: parent
-                    width: 80
-                    height: 30
-                    radius: 5
-                    border.color: "#0f748b"
-                    border.width: 2
-                    color: backGroundColor
-                    Text {
-                        anchors.centerIn: parent
-                        font.family: "Microsoft Yahei"
-                        font.bold: true
-                        color: "#0f748b"
-                        text: "OK"
-                    }
-                }
                 onClicked: {
                     dialog.close();
                 }
@@ -102,5 +88,16 @@ Item {
         root.x = (parent.width - dialog.width) * 0.5
         root.y = (parent.height - dialog.height) * 0.5
         dialog.open();
+    }
+
+
+    Component.onCompleted: {
+
+        translator()
+    }
+
+    function translator() {
+        btnOK.toolTip = qsTr("Confirm tip")
+        btnOK.text = qsTr("OK")
     }
 }

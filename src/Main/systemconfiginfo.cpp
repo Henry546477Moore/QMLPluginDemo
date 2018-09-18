@@ -20,11 +20,10 @@ void SystemConfigInfo::readConfig()
     if(!f.exists())
     {
         set->setValue("/system/language", "zh_CN");
-        set->setValue("/system/title", "qml plugin application");
+        set->setValue("/system/title", tr("qml plugin application"));
         set->setValue("/system/user_name", stringToMD5("admin"));
         set->setValue("/system/password", stringToMD5("123456"));
-        set->setValue("/system/close_type", 2);
-        set->setValue("/system/choice_manual", true);
+        set->setValue("/system/close_type", 1);         //0: close, 1: minimize, 2: choice by user
         set->setValue("/system/rember_close", false);
         set->setValue("/background/use_image", false);
         set->setValue("/background/current_source", "#006699");
@@ -34,11 +33,10 @@ void SystemConfigInfo::readConfig()
     }
 
     QString _language = set->value("/system/language", "zh_CN").toString();
-    m_appTitle = set->value("/system/title", "qml plugin application").toString();
+    m_appTitle = set->value("/system/title", tr("qml plugin application")).toString();
     m_userName = set->value("/system/user_name", stringToMD5("admin")).toString();
     m_pwd = set->value("/system/password", stringToMD5("123456")).toString();
-    m_closeType = set->value("/system/close_type", 2).toInt();
-    m_choiceByMySelf = set->value("/system/choice_manual", true).toBool();
+    m_closeType = set->value("/system/close_type", 1).toInt();
     m_isRemberCloseType = set->value("/system/rember_close", false).toBool();
     m_isUseBackgroundImg = set->value("/background/use_image", false).toBool();
     m_backgroundSource = set->value("/background/current_source", "#006699").toString();
@@ -76,17 +74,18 @@ void SystemConfigInfo::readConfig()
     setCurrentLanguage(_language);
 }
 
-void SystemConfigInfo::setMainWindowCloseType(const int &closeType, const bool &choiceMySelf, const bool &isRemberType)
+void SystemConfigInfo::setMainWindowCloseType(const int &closeType, const bool &isRemberType)
 {
     m_closeType = closeType;
-    m_choiceByMySelf = choiceMySelf;
     m_isRemberCloseType = isRemberType;
 
     QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
     set->setValue("/system/close_type", m_closeType);
-    set->setValue("/system/choice_manual", m_choiceByMySelf);
     set->setValue("/system/rember_close", m_isRemberCloseType);
     delete set;
+
+    emit closeTypeChanged();
+    emit remberCloseTypeChanged();
 }
 
 QString SystemConfigInfo::appTitle()
@@ -102,11 +101,6 @@ QString SystemConfigInfo::currentLanguage()
 int SystemConfigInfo::closeType()
 {
     return m_closeType;
-}
-
-bool SystemConfigInfo::manualChoiceCloseType()
-{
-    return m_choiceByMySelf;
 }
 
 bool SystemConfigInfo::remberCloseType()
@@ -128,6 +122,23 @@ bool SystemConfigInfo::invalidUser(const QString &userName, const QString &pwd)
 QTranslator *trans = nullptr;
 void SystemConfigInfo::setCurrentLanguage(const QString &currentLanguage)
 {
+    if(currentLanguage != m_currentLanguage)
+    {
+        m_currentLanguage = currentLanguage;
+
+        QSettings *set = new QSettings(m_sysConfigPath, QSettings::IniFormat);
+        set->setValue("/system/language", m_currentLanguage);
+        delete set;
+
+        if(trans == nullptr)
+        {
+            trans = new QTranslator;
+            qApp->installTranslator(trans);
+        }
+        QString languagePath(QString("%1/languages/%2.qm").arg(QCoreApplication::applicationDirPath()).arg(m_currentLanguage));
+        trans->load(languagePath);
+        emit currentLanguageChanged();
+    }
 }
 
 bool SystemConfigInfo::isUseBackgroundImg()

@@ -26,19 +26,17 @@ Rectangle {
     }
 
     FontButton {
-            id:minBtn
-            anchors.right: maxBtn.left
+        id:minBtn
+        anchors.right: maxBtn.left
 
-            width: 32
-            height: 32
+        width: 32
+        height: 32
 
-            text: "\uf2d1"
-            bgcolorNormal: "transparent"
-            bgcolorHover: "#aaa"
-            bgcolorPressed: "#aaa"
+        text: "\uf2d1"
+        bgcolorHover: "#aaa"
 
-            onClicked: mainWindow.showMinimized()
-        }
+        onClicked: mainWindow.showMinimized()
+    }
 
 
     FontButton {
@@ -51,9 +49,7 @@ Rectangle {
         height: 32
 
         text: "\uf2d0"
-        bgcolorNormal: "transparent"
         bgcolorHover: "#aaa"
-        bgcolorPressed: "#aaa"
 
         onClicked: root.maxUndoFun()
     }
@@ -67,9 +63,7 @@ Rectangle {
         height: 32
 
         text: "\uf2d4"
-        bgcolorNormal: "transparent"
         bgcolorHover: "red"
-        bgcolorPressed: "red"
 
         onClicked: root.closed()
     }
@@ -80,14 +74,28 @@ Rectangle {
         {
             mainWindow.showNormal()
 
-            maxBtn.text = "\uf2d2"
+            maxBtn.text = "\uf2d0"
+            maxBtn.toolTip = qsTr("Maximization")
         }
         else
         {
             mainWindow.showMaximized()
 
-            maxBtn.text = "\uf2d0"
+            maxBtn.text = "\uf2d2"
+            maxBtn.toolTip = qsTr("Restore")
         }
         isMax = !isMax
+    }
+
+
+    Component.onCompleted: {
+
+        translator()
+    }
+
+    function translator() {
+        minBtn.toolTip = qsTr("Minimize")
+        maxBtn.toolTip = qsTr("Maximization")
+        closeBtn.toolTip = qsTr("Close")
     }
 }

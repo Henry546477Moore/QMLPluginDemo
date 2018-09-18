@@ -1,68 +1,36 @@
-import QtQuick 2.9
+import QtQuick 2.11
 import QtQuick.Controls 2.2
 
-Rectangle {
-    id: fontButton
+Button {
+    id: control
 
-    property string text: ""
     property int fontSize: 12
     property string toolTip
-    property color backgroundColor: "#00000000"
-    property color bgcolorNormal: "#00000000"
+
     property color bgcolorHover: "#00000000"
-    property color bgcolorPressed: "#00000000"
 
-    signal clicked
-
-    color: fontButton.backgroundColor
-    state: "normal"
 
     ToolTip.visible: hovered
     ToolTip.text: toolTip
 
-    Text {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: fontButton.text
-        font.pixelSize: fontButton.fontSize
+    contentItem: Text {
+        text: control.text
+        //font: control.font
+        opacity: enabled ? 1.0 : 0.3
         color: "white"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        elide: Text.ElideRight
+        font.pixelSize: control.fontSize
         font.family: "FontAwesome"
     }
 
-    MouseArea {
-        hoverEnabled: true
-        anchors.fill: parent
-        onEntered: fontButton.state = (fontButton.state == "pressed" ? "pressed" : "hover")
-        onExited: fontButton.state = (fontButton.state == "pressed" ? "pressed" : "normal")
-        onPressed: fontButton.state = "pressed"
-        onReleased: {
-            fontButton.state = "normal"
-            fontButton.clicked()
-        }
+    background: Rectangle {
+        implicitWidth: 50
+        implicitHeight: 25
+        opacity: enabled ? 1 : 0.3
+        border.width: 0
+        color: control.hovered ? bgcolorHover : "transparent"
+        radius: 2
     }
-
-    states:
-    [
-        State {
-            name: "hover"
-            PropertyChanges {
-                target: fontButton
-                backgroundColor: bgcolorHover
-            }
-        },
-        State {
-            name: "normal"
-            PropertyChanges {
-                target: fontButton
-                backgroundColor: bgcolorNormal
-            }
-        },
-        State {
-            name: "pressed"
-            PropertyChanges {
-                target: fontButton
-                backgroundColor: bgcolorPressed
-            }
-        }
-    ]
 }

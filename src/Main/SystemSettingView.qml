@@ -8,8 +8,6 @@ import "controls" as MyControls
 
 Item {
     id: root
-    property int closeType                 //0: close 1: minimize to tray
-    property bool remberMyChoice
     signal choiceAndClose
 
     width: 250
@@ -75,17 +73,17 @@ Item {
 
         RadioButton {
             id: cbMin
-            checked: closeType == 1
+            checked: appConfig.closeType == 1
         }
 
         RadioButton {
             id: cbClose
-            checked: closeType == 0
+            checked: appConfig.closeType == 0
         }
 
-        CheckBox {
-            id: cbRember
-            checked: remberMyChoice
+        RadioButton {
+            id: cbChoice
+            checked: !appConfig.remberCloseType
         }
 
 
@@ -96,15 +94,14 @@ Item {
             anchors.topMargin: 10
 
             onClicked: {
-                if(cbClose.checked) {
-                    closeType = 0
+                var closeType = 0
+                var saveClose = false
+                if(cbClose.checked || cbMin.checked) {
+                    saveClose = true
+                    closeType = cbClose.checked ? 0 : 1
                 }
-                else if(cbMin.checked) {
-                    closeType = 1
-                }
-                if(cbRember.checked) {
-                    remberMyChoice = true
-                }
+
+                appConfig.setMainWindowCloseType(closeType, saveClose)
 
                 root.choiceAndClose()
             }
@@ -112,6 +109,13 @@ Item {
     }
 
     Component.onCompleted: {
+        if(appConfig.remberCloseType) {
+            cbMin.checked = appConfig.closeType == 1
+            cbClose.checked = appConfig.closeType == 0
+        }
+        else {
+            cbChoice.checked = true
+        }
         translator()
     }
 
