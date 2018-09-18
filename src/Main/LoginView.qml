@@ -153,7 +153,6 @@ ApplicationWindow {
         anchors.topMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 17
-
         onClicked: invalidUser()
     }
 

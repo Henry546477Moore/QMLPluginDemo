@@ -14,6 +14,11 @@ ApplicationWindow {
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Window
 
+    Connections {
+        target: appConfig
+        onCurrentLanguageChanged: translator()
+    }
+
     Rectangle {
         id: bgRect
         anchors.fill: parent

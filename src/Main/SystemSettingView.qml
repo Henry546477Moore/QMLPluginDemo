@@ -8,6 +8,8 @@ import "controls" as MyControls
 
 Item {
     id: root
+    property int closeType
+    property bool choiceSelf
     signal choiceAndClose
 
     width: 250
@@ -73,17 +75,17 @@ Item {
 
         RadioButton {
             id: cbMin
-            checked: appConfig.closeType == 1
+            checked: closeType == 1
         }
 
         RadioButton {
             id: cbClose
-            checked: appConfig.closeType == 0
+            checked: closeType == 0
         }
 
         RadioButton {
             id: cbChoice
-            checked: !appConfig.remberCloseType
+            checked: choiceSelf
         }
 
 
@@ -94,14 +96,13 @@ Item {
             anchors.topMargin: 10
 
             onClicked: {
-                var closeType = 0
-                var saveClose = false
                 if(cbClose.checked || cbMin.checked) {
-                    saveClose = true
+                    choiceSelf = false
                     closeType = cbClose.checked ? 0 : 1
                 }
-
-                appConfig.setMainWindowCloseType(closeType, saveClose)
+                else {
+                    choiceSelf = true
+                }
 
                 root.choiceAndClose()
             }
@@ -109,13 +110,6 @@ Item {
     }
 
     Component.onCompleted: {
-        if(appConfig.remberCloseType) {
-            cbMin.checked = appConfig.closeType == 1
-            cbClose.checked = appConfig.closeType == 0
-        }
-        else {
-            cbChoice.checked = true
-        }
         translator()
     }
 
@@ -123,7 +117,7 @@ Item {
         titleBar.title = qsTr("When close main window")
         cbClose.text = qsTr("Exit system")
         cbMin.text = qsTr("Minimize to System Tray")
-        cbRember.text = qsTr("Remember my choice.")
+        cbChoice.text = qsTr("Choice Self")
         btnOK.text = qsTr("OK")
         btnOK.toolTip = qsTr("Confirm closing operation")
     }

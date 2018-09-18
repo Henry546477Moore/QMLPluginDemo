@@ -115,34 +115,12 @@ Rectangle {
         id: settingMenu
 
         Action {
-            id: actMin
-            checkable: true
-            //exclusiveGroup: "closeType"
-            checked: {
-                if(appConfig.remberCloseType && appConfig.closeType == 1) {
-                    return true
-                }
-                return false
+            id: actSetting
+            onTriggered: {
+                settingView.closeType = appConfig.closeType
+                settingView.choiceSelf  = !appConfig.remberCloseType
+                settingPopup.open()
             }
-        }
-
-        Action {
-            id: actClose
-            checkable: true
-            //GroupBox: "closeType"
-            checked: {
-                if(appConfig.remberCloseType && appConfig.closeType == 0) {
-                    return true
-                }
-                return false
-            }
-        }
-
-        Action {
-            id: actChoice
-            checkable: true
-            //GroupBox: "closeType"
-            checked: !appConfig.remberCloseType
         }
 
         Action {
@@ -274,6 +252,27 @@ Rectangle {
 
                 closePopup.close()
             }
+            onCancelClose: closePopup.close()
+        }
+    }
+
+    Popup{
+        id:settingPopup
+        contentWidth: settingView.implicitWidth
+        contentHeight: settingView.implicitHeight
+        x:(mainWindow.width - settingView.width) / 2
+        y:(mainWindow.height - settingView.height) / 2
+        opacity: 0.8
+        modal: true
+        focus: true
+        closePolicy: Popup.NoAutoClose
+
+        SystemSettingView {
+            id: settingView
+            onChoiceAndClose: {
+                appConfig.setMainWindowCloseType(settingView.closeType, !settingView.choiceSelf)
+                settingPopup.close()
+            }
         }
     }
 
@@ -356,9 +355,7 @@ Rectangle {
         minBtn.toolTip = qsTr("Minimize")
         maxBtn.toolTip = qsTr("Maximization")
         closeBtn.toolTip = qsTr("Close")
-        actMin.text = qsTr("When click close to Minimize to System Tray")
-        actClose.text = qsTr("When click close to Exit system")
-        actChoice.text = qsTr("When click close let me Choice")
+        actSetting.text = qsTr("Setting")
     }
 }
 

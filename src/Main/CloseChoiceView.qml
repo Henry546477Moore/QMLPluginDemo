@@ -10,7 +10,9 @@ Item {
     id: root
     property int closeType                 //0: close 1: minimize to tray
     property bool remberMyChoice
+
     signal choiceAndClose
+    signal cancelClose
 
     width: 250
     height: 250
@@ -57,7 +59,7 @@ Item {
         showMinBtn: false
         showMaxBtn: false
 
-        onClosed: Qt.quit()
+        onClosed: root.cancelClose()
     }
 
     Rectangle {
@@ -72,6 +74,7 @@ Item {
     ColumnLayout {
         anchors.horizontalCenter: root.horizontalCenter
         anchors.top: titleBar.bottom
+        anchors.topMargin: 10
 
         RadioButton {
             id: cbMin
