@@ -24,6 +24,7 @@ QML_IMPORT_PATH =
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
+TARGET = QmlPluginApp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -31,9 +32,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 CONFIG(debug, debug|release){
-    DESTDIR = ./../../QmlPluginDemo(Debug)
+    DESTDIR = ./../../debug
 } else {
-    DESTDIR = ./../../QmlPluginDemo(Release)
+    DESTDIR = ./../../release
 }
 
 HEADERS += \
