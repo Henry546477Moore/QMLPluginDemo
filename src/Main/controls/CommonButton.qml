@@ -7,7 +7,7 @@ Button {
 
     property string toolTip: ""
 
-    ToolTip.visible: hovered
+    ToolTip.visible: hovered && toolTip.length > 0
     ToolTip.text: toolTip
 
     contentItem: Text {
@@ -22,8 +22,8 @@ Button {
     }
 
     background: Rectangle {
-     implicitWidth: 50
-     implicitHeight: 25
+     implicitWidth: control.width
+     implicitHeight: control.height
      opacity: enabled ? 1 : 0.3
      border.width: 0
      color: control.hovered ? "#3CC3F5" : (control.down ? "#3CC3F5" : "#00A3FF")

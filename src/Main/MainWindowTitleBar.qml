@@ -117,8 +117,14 @@ Rectangle {
         Action {
             id: actSetting
             onTriggered: {
-                settingView.closeType = appConfig.closeType
-                settingView.choiceSelf  = !appConfig.remberCloseType
+                if(appConfig.remberCloseType) {
+                    settingView.closeType = appConfig.closeType
+                    settingView.choiceSelf = false
+                }
+                else {
+                    settingView.closeType = 2
+                    settingView.choiceSelf = true
+                }
                 settingPopup.open()
             }
         }
@@ -273,6 +279,7 @@ Rectangle {
                 appConfig.setMainWindowCloseType(settingView.closeType, !settingView.choiceSelf)
                 settingPopup.close()
             }
+            onCancelAndClose: settingPopup.close()
         }
     }
 
@@ -287,7 +294,7 @@ Rectangle {
         }
         else {
             closeChoice.remberMyChoice = false
-            closeChoice.closeType = 0
+            closeChoice.closeType = 1
             closePopup.open()
         }
     }

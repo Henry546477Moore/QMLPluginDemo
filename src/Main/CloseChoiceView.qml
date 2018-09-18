@@ -14,8 +14,8 @@ Item {
     signal choiceAndClose
     signal cancelClose
 
-    width: 250
-    height: 250
+    width: 300
+    height: 240
 
     Rectangle {
         id: bgRect
@@ -94,9 +94,10 @@ Item {
 
         MyControls.CommonButton {
             id: btnOK
-            width: 250
+            width: 70
             height: 30
-            anchors.topMargin: 10
+            anchors.topMargin: 30
+            anchors.leftMargin: 20
 
             onClicked: {
                 if(cbClose.checked) {
@@ -112,6 +113,16 @@ Item {
                 root.choiceAndClose()
             }
         }
+
+        MyControls.CommonButton {
+            id: btnCancel
+            anchors.left: btnOK.right
+            anchors.leftMargin: 20
+            anchors.top: btnOK.top
+            width: 70
+            height: 30
+            onClicked: root.cancelClose()
+        }
     }
 
     Component.onCompleted: {
@@ -124,6 +135,6 @@ Item {
         cbMin.text = qsTr("Minimize to System Tray")
         cbRember.text = qsTr("Remember my choice.")
         btnOK.text = qsTr("OK")
-        btnOK.toolTip = qsTr("Confirm closing operation")
+        btnCancel.text = qsTr("Cancel")
     }
 }

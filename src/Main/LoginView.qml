@@ -16,186 +16,174 @@ ApplicationWindow {
     visible: true
     flags: Qt.FramelessWindowHint | Qt.Window
 
-    SystemConfigInfo{
-        id: appConfig
-        onCurrentLanguageChanged: translator()
-    }
-
-    Rectangle {
-        id: bgRect
+    Item {
         anchors.fill: parent
-        visible: !appConfig.isUseBackgroundImg
-        color: bgRect.visible ? appConfig.backgroundSource : ""
-    }
 
-    Image {
-        id: image
-        anchors.fill: parent
-        source: appConfig.isUseBackgroundImg ? appConfig.backgroundSource : ""
-        fillMode: Image.PreserveAspectCrop
-        visible: false
-    }
+        SystemConfigInfo{
+            id: appConfig
+            onCurrentLanguageChanged: translator()
+        }
 
-    Rectangle {
-        id: mask
-        color: "transparent"
-        anchors.fill: parent
         Rectangle {
-           anchors.fill: parent
-           radius: 1
-           color: "black"
+            id: bgRect
+            anchors.fill: parent
+            visible: !appConfig.isUseBackgroundImg
+            color: bgRect.visible ? appConfig.backgroundSource : ""
+            radius: 5
         }
-        visible: false
-    }
 
-    OpacityMask {
-        id: imgMask
-        anchors.fill: image
-        source: image
-        maskSource: mask
-        visible: appConfig.isUseBackgroundImg
-    }
-
-    MouseArea{
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
-        property point cliCkPos: "0,0"
-        onPressed: {
-            cliCkPos = Qt.point(mouse.x, mouse.y)
+        Image {
+            id: image
+            anchors.fill: parent
+            source: appConfig.isUseBackgroundImg ? appConfig.backgroundSource : ""
+            fillMode: Image.PreserveAspectCrop
+            visible: false
         }
-        onPositionChanged: {
-            var delta = Qt.point(mouse.x - cliCkPos.x, mouse.y - cliCkPos.y)
-            loginView.x = (loginView.x + delta.x)
-            loginView.y = (loginView.y + delta.y)
+
+        Rectangle {
+            id: mask
+            color: "transparent"
+            anchors.fill: parent
+            Rectangle {
+               anchors.fill: parent
+               radius: 1
+               color: "black"
+            }
+            visible: false
         }
-    }
 
-    MyControls.CommonTitleBar {
-        id: titleBar
-        width: parent.width
-        height: 32
-        showMinBtn: false
-        showMaxBtn: false
-
-        onClosed: Qt.quit()
-    }
-
-    Rectangle {
-        id: contentBackground
-        anchors.top: titleBar.bottom
-        width: parent.width
-        height: parent.height - titleBar.height
-        color: "white"
-        opacity: 0.6
-    }
-
-    Label {
-        id: lblTitle
-        font.bold: true
-        font.pixelSize: 26
-        height: 40
-        color: "white"
-        anchors.top: titleBar.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 20
-    }
-
-    TextField {
-        id: txtUserName
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: lblTitle.bottom
-        font.pixelSize: 14
-        color: "#00a5f7"
-        width: 250
-        height: 30
-        focus: true
-        //Keys.onPressed: inputKey(event.key)
-    }
-
-    TextField {
-        id: txtPwd
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: txtUserName.bottom
-        echoMode: TextInput.Password
-        font.pixelSize: 14
-        color: "#00a5f7"
-        width: 250
-        height: 30
-        anchors.topMargin: 10
-        //Keys.onPressed: inputKey(event.key)
-    }
-
-//    CheckBox {
-//        id: cbRemberPwd
-//        anchors.top: txtPwd.bottom
-//        anchors.left: parent.left
-//        anchors.leftMargin: 70
-//        anchors.rightMargin: 10
-//        anchors.topMargin: 15
-//    }
-
-//    CheckBox {
-//        id: cbAutoLogin
-//        anchors.top: txtPwd.bottom
-//        anchors.left: cbRemberPwd.right
-//        anchors.topMargin: 15
-//    }
-
-    Loader {
-        id: myLoader
-    }
-
-    MyControls.CommonButton {
-        id: btnLogin
-        width: 250
-        height: 35
-        anchors.top: txtPwd.bottom
-        anchors.topMargin: 15
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: 17
-        onClicked: invalidUser()
-    }
-
-    MyControls.MyMessageBox {
-        id: msgDlg
-    }
-
-    Component.onCompleted: {
-
-        translator()
-    }
-
-    function translator() {
-        titleBar.title = appConfig.appTitle
-        lblTitle.text = qsTr("Welcome")
-        txtUserName.placeholderText = qsTr("User Name")
-        txtPwd.placeholderText = qsTr("Password")
-        //cbRemberPwd.text = qsTr("Rember password")
-        //cbAutoLogin.text = qsTr("Auto login")
-        btnLogin.text = qsTr("Safe login")
-        btnLogin.toolTip = qsTr("Click to safe login system")
-    }
-
-    function inputKey(key) {
-        switch(key) {
-        case Keys.onEnterPressed:
-            invalidUser()
-            break;
-        case Keys.onReturnPressed:
-            invalidUser()
-            break;
+        OpacityMask {
+            id: imgMask
+            anchors.fill: image
+            source: image
+            maskSource: mask
+            visible: appConfig.isUseBackgroundImg
         }
-    }
 
-    function invalidUser() {
-        if(appConfig.invalidUser(txtUserName.text, txtPwd.text)) {
-            console.debug("invalid ok")
-            myLoader.source = "main.qml"
-            loginView.visible = false
+        MouseArea{
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            property point cliCkPos: "0,0"
+            onPressed: {
+                cliCkPos = Qt.point(mouse.x, mouse.y)
+            }
+            onPositionChanged: {
+                var delta = Qt.point(mouse.x - cliCkPos.x, mouse.y - cliCkPos.y)
+                loginView.x = (loginView.x + delta.x)
+                loginView.y = (loginView.y + delta.y)
+            }
         }
-        else {
-            msgDlg.tipText = qsTr("Please input right user name and password!")
-            msgDlg.openMsg()
+
+        MyControls.CommonTitleBar {
+            id: titleBar
+            width: parent.width
+            height: 32
+            showMinBtn: false
+            showMaxBtn: false
+
+            onClosed: Qt.quit()
+        }
+
+        Rectangle {
+            id: contentBackground
+            anchors.top: titleBar.bottom
+            width: parent.width
+            height: parent.height - titleBar.height
+            color: "white"
+            opacity: 0.6
+        }
+
+        Label {
+            id: lblTitle
+            font.bold: true
+            font.pixelSize: 26
+            height: 40
+            color: "white"
+            anchors.top: titleBar.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.margins: 20
+        }
+
+        TextField {
+            id: txtUserName
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: lblTitle.bottom
+            font.pixelSize: 14
+            color: "#00a5f7"
+            width: 250
+            height: 30
+            focus: true
+        }
+
+        TextField {
+            id: txtPwd
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: txtUserName.bottom
+            echoMode: TextInput.Password
+            font.pixelSize: 14
+            color: "#00a5f7"
+            width: 250
+            height: 30
+            anchors.topMargin: 10
+        }
+
+        Loader {
+            id: myLoader
+        }
+
+        MyControls.CommonButton {
+            id: btnLogin
+            width: 250
+            height: 35
+            anchors.top: txtPwd.bottom
+            anchors.topMargin: 15
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: 17
+            onClicked: {
+                parent.invalidUser()
+            }
+        }
+
+        Keys.onPressed: {
+            if(event.key == Qt.Key_Enter
+               || event.key == Qt.Key_Return) {
+                invalidUser()
+                event.accepted = true
+            }
+        }
+
+        Keys.onEscapePressed: Qt.quit()
+
+        MyControls.MyMessageBox {
+            id: msgDlg
+        }
+
+        Component.onCompleted: {
+
+            translator()
+        }
+
+        function translator() {
+            title = titleBar.title = appConfig.appTitle
+            lblTitle.text = qsTr("Welcome")
+            txtUserName.placeholderText = qsTr("User Name")
+            txtPwd.placeholderText = qsTr("Password")
+            //cbRemberPwd.text = qsTr("Rember password")
+            //cbAutoLogin.text = qsTr("Auto login")
+            btnLogin.text = qsTr("Safe login")
+            //btnLogin.toolTip = qsTr("Click to safe login system")
+        }
+
+        function invalidUser() {
+            if(appConfig.invalidUser(txtUserName.text, txtPwd.text)) {
+                console.debug("invalid ok")
+                myLoader.source = "main.qml"
+                loginView.visible = false
+            }
+            else {
+                msgDlg.tipText = qsTr("Please input right user name and password!")
+                msgDlg.openMsg()
+            }
         }
     }
 }
