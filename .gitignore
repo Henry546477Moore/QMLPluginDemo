@@ -6,3 +6,5 @@ QmlPluginDemo(Release)
 *.o
 *.user
 *.qmlc
+QmlPluginDemo(Release)/Main.exe
+QmlPluginDemo(Release)/Main.exe

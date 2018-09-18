@@ -75,26 +75,28 @@ Item {
                 opacity: appConfig.backgroundOpacity
             }
 
-            MyControls.ImageButton {
+            MyControls.CommonButton {
                 id: addImg
-                height: 35
+                height: 32
+                anchors.left: content.left
+                anchors.top: content.top
+                anchors.leftMargin: 5
+                anchors.topMargin: 5
 
-
-                picHover: "qrc:/images/addimg_32x32.png"
-                picNormal: "qrc:/images/addimg_32x32.png"
-                picPressed: "qrc:/images/addimg_32x32.png"
+                text: qsTr("Add New Image")
+                toolTip: qsTr("Add new image as system background source")
 
                 onClicked: fileDialog.open()
             }
-            MyControls.ImageButton {
+            MyControls.CommonButton {
                 id: addColor
-                height: 35
+                height: 32
                 anchors.left: addImg.right
+                anchors.top: addImg.top
+                anchors.leftMargin: 20
 
-
-                picHover: "qrc:/images/addcolor_32x32.png"
-                picNormal: "qrc:/images/addcolor_32x32.png"
-                picPressed: "qrc:/images/addcolor_32x32.png"
+                text: qsTr("Add New Color")
+                toolTip: qsTr("Add new color as system background source")
 
                 onClicked: colorDialog.open()
             }

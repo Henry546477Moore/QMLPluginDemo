@@ -10,7 +10,7 @@ Button {
     property color bgcolorHover: "#00000000"
 
 
-    ToolTip.visible: hovered
+    ToolTip.visible: hovered && toolTip.length > 0
     ToolTip.text: toolTip
 
     contentItem: Text {

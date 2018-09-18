@@ -34,6 +34,7 @@ Item {
         id: btnFirst
         anchors.left: cbPageSize.visible? cbPageSize.right : pagerInfo.right
         anchors.leftMargin: 5
+        width: 50
         text: "<<"
         toolTip: qsTr("Jump to first page")
         onClicked: {
@@ -46,6 +47,7 @@ Item {
         id: btnPre
         anchors.left: btnFirst.right
         anchors.leftMargin: 5
+        width: 50
         text: "<"
         toolTip: qsTr("Jump to previous page")
         onClicked: {
@@ -71,6 +73,7 @@ Item {
         id: btnNext
         anchors.left: txtTotalPageCount.right
         anchors.leftMargin: 5
+        width: 50
         text: ">"
         toolTip: qsTr("Jump to next page")
         onClicked: {
@@ -83,6 +86,7 @@ Item {
         id: btnLast
         anchors.left: btnNext.right
         anchors.leftMargin: 5
+        width: 50
         text: ">>"
         toolTip: qsTr("Jump to last page")
         onClicked: {
