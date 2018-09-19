@@ -84,5 +84,9 @@
         <file>images/warning.png</file>
         <file>CloseChoiceView.qml</file>
         <file>SystemSettingView.qml</file>
+        <file>images/setting_32x32.png</file>
+        <file>controls/CustomWindowBase.qml</file>
+        <file>controls/PageTemplateBase.qml</file>
+        <file>controls/CommonBackground.qml</file>
     </qresource>
 </RCC>

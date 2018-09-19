@@ -6,207 +6,124 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import "controls" as MyControls
 
-Item {
+MyControls.CustomWindowBase {
     id: root
-    signal closed
 
-    width: 600
-    height: 500
+    showMinBtn: false
+    showMaxBtn: false
 
-    Rectangle {
-        id: bgRect
-        anchors.fill: parent
-        visible: !appConfig.isUseBackgroundImg
-        color: bgRect.visible ? appConfig.backgroundSource : ""
-    }
+    contentComponent:  Item {
+        id: cItem
 
-    Image {
-        id: image
-        anchors.fill: parent
-        source: appConfig.isUseBackgroundImg ? appConfig.backgroundSource : ""
-        fillMode: Image.PreserveAspectCrop
-        visible: false
-    }
-
-    Rectangle {
-        id: mask
-        color: "transparent"
-        anchors.fill: parent
-        Rectangle {
-           anchors.fill: parent
-           radius: 1
-           color: "black"
-        }
-        visible: false
-    }
-
-    OpacityMask {
-        id: imgMask
-        anchors.fill: image
-        source: image
-        maskSource: mask
-        visible: appConfig.isUseBackgroundImg
-    }
-
-    ColumnLayout {
-
-        MyControls.CommonTitleBar {
-            id: titleBar
-            width: root.width
+        MyControls.CommonButton {
+            id: addImg
             height: 32
-            showMinBtn: false
-            showMaxBtn: false
+            anchors.left: cItem.left
+            anchors.top: cItem.top
+            anchors.leftMargin: 5
+            anchors.topMargin: 5
 
-            title: qsTr("System background manager")
+            text: qsTr("Add New Image")
+            toolTip: qsTr("Add new image as system background source")
 
-            onClosed: root.closed()
+            onClicked: fileDialog.open()
+        }
+        MyControls.CommonButton {
+            id: addColor
+            height: 32
+            anchors.left: addImg.right
+            anchors.top: addImg.top
+            anchors.leftMargin: 20
+
+            text: qsTr("Add New Color")
+            toolTip: qsTr("Add new color as system background source")
+
+            onClicked: colorDialog.open()
         }
 
-        Item {
-            id: content
-            anchors.top: titleBar.bottom
-            width: root.width
-            height: root.height - titleBar.height
+        Slider {
+            id: sliderBgOpacity
+            width: root.width - 20
+            anchors.top: addColor.bottom
+            anchors.horizontalCenter: root.horizontalCenter
+            height: 30
+            stepSize: 0.1
+            value: appConfig.backgroundOpacity
+            onValueChanged: appConfig.setBackgroundOpacity(value)
+        }
 
-            Rectangle {
-                id: contentBackground
-                anchors.fill: parent
-                color: "white"
-                opacity: appConfig.backgroundOpacity
-            }
-
-            MyControls.CommonButton {
-                id: addImg
-                height: 32
-                anchors.left: content.left
-                anchors.top: content.top
-                anchors.leftMargin: 5
-                anchors.topMargin: 5
-
-                text: qsTr("Add New Image")
-                toolTip: qsTr("Add new image as system background source")
-
-                onClicked: fileDialog.open()
-            }
-            MyControls.CommonButton {
-                id: addColor
-                height: 32
-                anchors.left: addImg.right
-                anchors.top: addImg.top
-                anchors.leftMargin: 20
-
-                text: qsTr("Add New Color")
-                toolTip: qsTr("Add new color as system background source")
-
-                onClicked: colorDialog.open()
-            }
-
-            Slider {
-                id: sliderBgOpacity
-                width: root.width - 20
-                anchors.top: addColor.bottom
-                anchors.horizontalCenter: root.horizontalCenter
-                height: 30
-                stepSize: 0.1
-                value: appConfig.backgroundOpacity
-                onValueChanged: appConfig.setBackgroundOpacity(value)
-            }
-            Component {
-                id: m_Slider
-                Rectangle
-                {
-                    implicitHeight:8
-                    color:"gray"
-                    radius:8
-                }
-            }
-            Component  {
-                id: m_Handle
-                Rectangle{
-                    anchors.centerIn: parent;
-                    color:control.pressed ? "white":"lightgray";
-                    border.color: "gray";
-                    border.width: 2;
-                    width: 34;
-                    height: 34;
-                    radius: 12;
-
-                }
-            }
-
-            ScrollView {
-                id: contentView
-                anchors.top: sliderBgOpacity.bottom
-                height: parent.height - sliderBgOpacity.height - addColor.height - myPage.height - 5
-                clip: true
-                ColumnLayout {
-                    Flow {
-                        id: flow
-                        width: root.width
-                        Repeater {
-                            id:lstColors
-                            delegate: BackgroundDelete {}
-                        }
+        ScrollView {
+            id: contentView
+            anchors.top: sliderBgOpacity.bottom
+            height: cItem.height - sliderBgOpacity.height - addColor.height - myPage.height - 5
+            clip: true
+            ColumnLayout {
+                Flow {
+                    id: flow
+                    width: root.width
+                    Repeater {
+                        id:lstColors
+                        delegate: BackgroundDelete {}
                     }
                 }
             }
+        }
 
-            MyControls.PagerControl {
-                id: myPage
-                anchors.top: contentView.bottom
-                height: 35
-                mTotalCount: 105
-                onPageChanged: queryBackgroundSource()
+        MyControls.PagerControl {
+            id: myPage
+            anchors.top: contentView.bottom
+            height: 35
+            mTotalCount: 105
+            onPageChanged: queryBackgroundSource()
+        }
+
+
+        FileDialog {
+            id: fileDialog
+            title: qsTr("Choice the image as system background image source")
+            nameFilters: [
+            "Image Files (*.jpg *.png *.gif *.bmp *.ico)"
+            ]
+            onAccepted: appConfig.addBackgroundSource(true, fileUrl)
+        }
+
+        ColorDialog {
+            id: colorDialog
+            title: qsTr("Choice the color as system background color source")
+            color: "#aaaaaa"
+            onAccepted: appConfig.addBackgroundSource(false, color)
+        }
+
+        Component.onCompleted: {
+            var totalCount = appConfig.listSources.length;
+            myPage.pageSize = 12
+            myPage.pageSizeVisible = false
+            myPage.mTotalCount = totalCount
+            myPage.updatePageInfo()
+            queryBackgroundSource()
+        }
+
+        function queryBackgroundSource() {
+            var totalCount = appConfig.listSources.length
+            var pageSize = myPage.pageSize
+            if(pageSize < 1) {
+                pageSize = 100
             }
+            var pageCount = (totalCount + pageSize - 1) / pageSize
+            var pageIndex = myPage.pageIndex
+            if(pageIndex < 0){
+                pageIndex = 0
+            }
+            else if(pageIndex >= pageCount) {
+                pageIndex = pageCount - 1
+            }
+            var start = pageIndex * pageSize
+            var end = start + pageSize
+            if(end > totalCount) {
+                end = totalCount
+            }
+            lstColors.model = appConfig.listSources.slice(start, end)
+            flow.width = root.width
         }
-    }
-
-
-    FileDialog {
-        id: fileDialog
-        title: qsTr("Choice the image as system background image source")
-        nameFilters: [
-        "Image Files (*.jpg *.png *.gif *.bmp *.ico)"
-        ]
-        onAccepted: appConfig.addBackgroundSource(true, fileUrl)
-    }
-
-    ColorDialog {
-        id: colorDialog
-        title: qsTr("Choice the color as system background color source")
-        color: "#aaaaaa"
-        onAccepted: appConfig.addBackgroundSource(false, color)
-    }
-
-    Component.onCompleted: {
-        var totalCount = appConfig.listSources.length;
-        myPage.pageSize = 12
-        myPage.pageSizeVisible = false
-        myPage.mTotalCount = totalCount
-        myPage.updatePageInfo()
-        queryBackgroundSource()
-    }
-
-    function queryBackgroundSource() {
-        var totalCount = appConfig.listSources.length
-        var pageSize = myPage.pageSize
-        if(pageSize < 1) {
-            pageSize = 100
-        }
-        var pageCount = (totalCount + pageSize - 1) / pageSize
-        var pageIndex = myPage.pageIndex
-        if(pageIndex < 0){
-            pageIndex = 0
-        }
-        else if(pageIndex >= pageCount) {
-            pageIndex = pageCount - 1
-        }
-        var start = pageIndex * pageSize
-        var end = start + pageSize
-        if(end > totalCount) {
-            end = totalCount
-        }
-        lstColors.model = appConfig.listSources.slice(start, end)
-        flow.width = root.width
     }
 }

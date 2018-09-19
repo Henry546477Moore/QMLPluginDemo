@@ -6,7 +6,6 @@ import "controls" as MyControls
 
 Rectangle {
     id:root
-    //radius: 10
     property bool  isMax: false
     property string title
     color: "transparent"
@@ -84,7 +83,7 @@ Rectangle {
 
     MyControls.FontButton {
         id:maxBtn
-        anchors.topMargin: 14
+        //anchors.topMargin: 14
         anchors.right: closeBtn.left
         anchors.rightMargin: 2
         anchors.verticalCenter: parent.verticalCenter
@@ -114,8 +113,9 @@ Rectangle {
     Menu {
         id: settingMenu
 
-        Action {
+        MenuItem {
             id: actSetting
+            //iconSource: "qrc:/images/setting_32x32.png"
             onTriggered: {
                 if(appConfig.remberCloseType) {
                     settingView.closeType = appConfig.closeType
@@ -229,6 +229,8 @@ Rectangle {
 
         BackgroundMrgView {
             id: bgMrg
+            width: 600
+            height: 500
             onClosed: skinPopup.close()
         }
     }
@@ -238,8 +240,8 @@ Rectangle {
         id:closePopup
         contentWidth: closeChoice.implicitWidth
         contentHeight: closeChoice.implicitHeight
-        x:(mainWindow.width - closeChoice.width) / 2
-        y:(mainWindow.height - closeChoice.height) / 2
+        x: (mainWindow.width - closeChoice.width) / 2
+        y: (mainWindow.height - closeChoice.height) / 2
         opacity: 0.8
         modal: true
         focus: true
@@ -247,6 +249,8 @@ Rectangle {
 
         CloseChoiceView {
             id: closeChoice
+            width: 300
+            height: 240
             onChoiceAndClose: {
                 appConfig.setMainWindowCloseType(closeChoice.closeType, closeChoice.remberMyChoice)
                 if(closeChoice.closeType == 0) {
@@ -275,11 +279,13 @@ Rectangle {
 
         SystemSettingView {
             id: settingView
+            width: 300
+            height: 240
             onChoiceAndClose: {
                 appConfig.setMainWindowCloseType(settingView.closeType, !settingView.choiceSelf)
                 settingPopup.close()
             }
-            onCancelAndClose: settingPopup.close()
+            onCancelClose: settingPopup.close()
         }
     }
 

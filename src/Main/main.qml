@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import Qt.labs.platform 1.0
+import "controls" as MyControls
 
 ApplicationWindow {
     id:mainWindow
@@ -17,41 +18,6 @@ ApplicationWindow {
     Connections {
         target: appConfig
         onCurrentLanguageChanged: translator()
-    }
-
-    Rectangle {
-        id: bgRect
-        anchors.fill: parent
-        visible: !appConfig.isUseBackgroundImg
-        color: bgRect.visible ? appConfig.backgroundSource : ""
-    }
-
-    Image {
-        id: image
-        anchors.fill: parent
-        source: appConfig.isUseBackgroundImg ? appConfig.backgroundSource : ""
-        fillMode: Image.PreserveAspectCrop
-        visible: false
-    }
-
-    Rectangle {
-        id: mask
-        color: "transparent"
-        anchors.fill: parent
-        Rectangle {
-           anchors.fill: parent
-           radius: 1
-           color: "black"
-        }
-        visible: false
-    }
-
-    OpacityMask {
-        id: bgImgMask
-        anchors.fill: image
-        source: image
-        maskSource: mask
-        visible: appConfig.isUseBackgroundImg
     }
 
     MouseArea{
@@ -68,36 +34,34 @@ ApplicationWindow {
         }
     }
 
-    ColumnLayout {
-        id:mainLayout
+    MyControls.PageTemplateBase {
         anchors.fill: parent
-        spacing: 0
-        //title bar
-        MainWindowTitleBar {
+
+        headerComponent: MainWindowTitleBar {
             id:titleBar
             title: mainWindow.title
             height: 32
             Layout.fillWidth: true
         }
-        //center content area
-        ContentWidget{
+        contentComponent:  ContentWidget{
             id:contentWidget
 
             Layout.fillWidth: true
             Layout.fillHeight: true
             //color: "red"
         }
-        //status bar
-        MainWindowStatusBar {
+        footerComponent: MainWindowStatusBar {
             id:statusBar
             height: 32
             Layout.fillWidth: true
         }
     }
 
+
     SystemTrayIcon {
         id: myTrayIcon
         visible: true
+        tooltip: mainWindow.title
 
         iconSource: "qrc:/images/logo.ico"
 
@@ -112,16 +76,17 @@ ApplicationWindow {
                 text: qsTr("Quit")
                 onTriggered: Qt.quit()
             }
+
         }
+
     }
 
     Component.onCompleted: {
         translator()
-
     }
 
     function translator() {
-        myTrayIcon.tooltip = title = qsTr("QML Custom Window")
+        title = qsTr("QML Custom Window")
         myTrayIcon.showMessage(title, qsTr("Change language"))
     }
 }
