@@ -52,7 +52,8 @@ ApplicationWindow {
                 height: 40
                 color: "white"
                 anchors.horizontalCenter: contentItem.horizontalCenter
-                anchors.margins: 20
+                anchors.top: contentItem.top
+                anchors.topMargin: 20
             }
 
             TextField {

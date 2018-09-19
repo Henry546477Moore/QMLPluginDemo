@@ -26,6 +26,7 @@ Rectangle {
     MyControls.ImageButton {
         id:loginBtn
         anchors.right: loginTip.left
+        anchors.top: root.top
 
         picNormal: "qrc:/images/loginu_normal.png"
         picHover: "qrc:/images/loginu_hover.png"
@@ -47,6 +48,7 @@ Rectangle {
     MyControls.ImageButton {
         id:skinBtn
         anchors.right: settingBtn.left
+        anchors.top: root.top
 
         picNormal: "qrc:/images/skin_normal.png"
         picHover: "qrc:/images/skin_hover.png"
@@ -57,6 +59,7 @@ Rectangle {
     MyControls.ImageButton {
         id:settingBtn
         anchors.right: minBtn.left
+        anchors.top: root.top
 
         picNormal: "qrc:/images/menu_normal.png"
         picHover: "qrc:/images/menu_hover.png"
@@ -69,10 +72,10 @@ Rectangle {
     MyControls.FontButton {
             id:minBtn
             anchors.right: maxBtn.left
+            anchors.top: root.top
 
-
-            width: 32
-            height: 32
+            width: 40
+            height: 25
 
             text: "\uf2d1"
             bgcolorHover: "#aaa"
@@ -83,12 +86,12 @@ Rectangle {
 
     MyControls.FontButton {
         id:maxBtn
-        //anchors.topMargin: 14
         anchors.right: closeBtn.left
+        anchors.top: root.top
         anchors.rightMargin: 2
-        anchors.verticalCenter: parent.verticalCenter
-        width: 32
-        height: 32
+
+        width: 40
+        height: 25
 
         text: "\uf2d0"
         bgcolorHover: "#aaa"
@@ -99,10 +102,11 @@ Rectangle {
     MyControls.FontButton {
         id:closeBtn
         anchors.right: parent.right
+        anchors.top: root.top
         anchors.rightMargin: 2
 
-        width: 32
-        height: 32
+        width: 40
+        height: 25
 
         text: "\uf2d4"
         bgcolorHover: "red"

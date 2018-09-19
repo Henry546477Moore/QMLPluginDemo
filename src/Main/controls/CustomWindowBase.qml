@@ -39,7 +39,7 @@ Item {
     Item {
         id: titleItem
         width: root.width
-        height: 40
+        height: 30
 
         Text {
             id: cusTitle
@@ -56,9 +56,10 @@ Item {
         FontButton {
             id:minBtn
             anchors.right: maxBtn.left
+            anchors.top: titleItem.top
 
-            width: 32
-            height: 32
+            width: 40
+            height: 25
 
             text: "\uf2d1"
             bgcolorHover: "#aaa"
@@ -70,11 +71,13 @@ Item {
         FontButton {
             id:maxBtn
             anchors.topMargin: 14
+            anchors.top: titleItem.top
             anchors.right: closeBtn.left
             anchors.rightMargin: 2
             anchors.verticalCenter: titleItem.verticalCenter
-            width: 32
-            height: 32
+
+            width: 40
+            height: 25
 
             text: "\uf2d0"
             bgcolorHover: "#aaa"
@@ -84,12 +87,12 @@ Item {
 
         FontButton {
             id:closeBtn
+            anchors.top: titleItem.top
             anchors.right: titleItem.right
-            anchors.rightMargin: 2
             anchors.verticalCenter:  titleItem.verticalCenter
 
-            width: 32
-            height: 32
+            width: 40
+            height: 25
 
             text: "\uf2d4"
             bgcolorHover: "red"

@@ -24,6 +24,7 @@ MyControls.CustomWindowBase {
         id: cItem
 
         ColumnLayout {
+            anchors.top: cItem.top
             anchors.horizontalCenter: cItem.horizontalCenter
             anchors.topMargin: 10
 

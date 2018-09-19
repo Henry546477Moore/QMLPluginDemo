@@ -70,7 +70,6 @@
         <file>BackgroundDelete.qml</file>
         <file>images/addcolor_32x32.png</file>
         <file>images/addimg_32x32.png</file>
-        <file>controls/CommonTitleBar.qml</file>
         <file>controls/FontButton.qml</file>
         <file>controls/ImageButton.qml</file>
         <file>controls/LabelBtn.qml</file>

@@ -87,6 +87,6 @@ ApplicationWindow {
 
     function translator() {
         title = qsTr("QML Custom Window")
-        myTrayIcon.showMessage(title, qsTr("Change language"))
+        myTrayIcon.showMessage(title, qsTr("Change language is %1").arg(appConfig.currentLanguage))
     }
 }
