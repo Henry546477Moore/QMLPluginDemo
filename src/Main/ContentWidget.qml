@@ -1,6 +1,6 @@
-import QtQuick 2.0
+import QtQuick 2.11
 import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.3
+import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import "controls" as MyControls
 
@@ -48,56 +48,56 @@ Rectangle
             {
                 index:0
                 state:"checked"     //第一个是按下状态，默认显示第一个界面
-                picSrc: "images/ico_Examine.png"
+                picSrc: "qrc:/images/ico_Examine.png"
                 btnText:"电脑体检"
                 onClicked:toolbar.current=btnIndex
             }
             MyControls.ToolBtn
             {
                 index:1
-                picSrc: "images/ico_dsmain.png"
+                picSrc: "qrc:/images/ico_dsmain.png"
                 btnText:"木马查杀"
                 onClicked:toolbar.current=btnIndex
             }
             MyControls.ToolBtn
             {
                 index:2
-                picSrc: "images/ico_SysRepair.png"
+                picSrc: "qrc:/images/ico_SysRepair.png"
                 btnText:"系统修复"
                 onClicked:toolbar.current=btnIndex
             }
             MyControls.ToolBtn
             {
                 index:3
-                picSrc: "images/ico_TraceCleaner.png"
+                picSrc: "qrc:/images/ico_TraceCleaner.png"
                 btnText:"电脑清理"
                 onClicked:toolbar.current=btnIndex
             }
             MyControls.ToolBtn
             {
                 index:4
-                picSrc: "images/ico_SpeedupOpt.png"
+                picSrc: "qrc:/images/ico_SpeedupOpt.png"
                 btnText:"优化加速"
                 onClicked:toolbar.current=btnIndex
             }
             MyControls.ToolBtn
             {
                 index:5
-                picSrc: "images/ico_expert.png"
+                picSrc: "qrc:/images/ico_expert.png"
                 btnText:"电脑专家"
                 onClicked:toolbar.current=btnIndex
             }
             MyControls.ToolBtn
             {
                 index:6
-                picSrc: "images/ico_diannaomenzhen.png"
+                picSrc: "qrc:/images/ico_diannaomenzhen.png"
                 btnText:"电脑门诊"
                 onClicked:toolbar.current=btnIndex
             }
             MyControls.ToolBtn
             {
                 index:7
-                picSrc: "images/ico_softmgr.png"
+                picSrc: "qrc:/images/ico_softmgr.png"
                 btnText:"软件管家"
                 onClicked:toolbar.current=btnIndex
             }
@@ -106,7 +106,7 @@ Rectangle
                 id: logo
 
                 anchors.right: parent.right
-                source: "images/logo.png"
+                source: "qrc:/images/logo.png"
             }
         }
 
@@ -302,7 +302,7 @@ Rectangle
                             {
                                 width: 20
                                 height:20
-                                picSrc: "images/fireproof.png"
+                                picSrc: "qrc:/images/fireproof.png"
                                 text:"木马防火墙"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
@@ -311,7 +311,7 @@ Rectangle
                             {
                                 width: 20
                                 height:20
-                                picSrc: "images/triggerman.png"
+                                picSrc: "qrc:/images/triggerman.png"
                                 text:"360保镖"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
@@ -320,7 +320,7 @@ Rectangle
                             {
                                 width: 20
                                 height:20
-                                picSrc: "images/net_shop.png"
+                                picSrc: "qrc:/images/net_shop.png"
                                 text:"网购先赔"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
@@ -329,7 +329,7 @@ Rectangle
                             {
                                 width: 20
                                 height:20
-                                picSrc: "images/fireproof.png"
+                                picSrc: "qrc:/images/fireproof.png"
                                 text:"木马防火墙"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
@@ -338,7 +338,7 @@ Rectangle
                             {
                                 width: 20
                                 height:20
-                                picSrc: "images/triggerman.png"
+                                picSrc: "qrc:/images/triggerman.png"
                                 text:"360保镖"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
@@ -347,7 +347,7 @@ Rectangle
                             {
                                 width: 20
                                 height:20
-                                picSrc: "images/net_shop.png"
+                                picSrc: "qrc:/images/net_shop.png"
                                 text:"网购先赔"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
@@ -432,63 +432,63 @@ Rectangle
 
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/jingling.png"
+                                picSrc: "qrc:/images/jingling.png"
                                 text:"健康精灵"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/upan.png"
+                                picSrc: "qrc:/images/upan.png"
                                 text:"U盘鉴定器"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/zhuomian.png"
+                                picSrc: "qrc:/images/zhuomian.png"
                                 text:"安全桌面"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/youxi.png"
+                                picSrc: "qrc:/images/youxi.png"
                                 text:"游戏盒子"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/shouji.png"
+                                picSrc: "qrc:/images/shouji.png"
                                 text:"手机助手"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/ludashi.png"
+                                picSrc: "qrc:/images/ludashi.png"
                                 text:"鲁大师"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/ruanjian.png"
+                                picSrc: "qrc:/images/ruanjian.png"
                                 text:"360小助手"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/zhuangji.png"
+                                picSrc: "qrc:/images/zhuangji.png"
                                 text:"一键装机"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
                             }
                             MyControls.LabelBtn
                             {
-                                picSrc: "images/weishi.png"
+                                picSrc: "qrc:/images/weishi.png"
                                 text:"手机卫士"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true

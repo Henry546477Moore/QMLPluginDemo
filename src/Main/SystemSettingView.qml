@@ -71,7 +71,7 @@ MyControls.CustomWindowBase {
                 anchors.top: btnOK.top
                 width: 70
                 height: 30
-                onClicked: root.cancelAndClose()
+                onClicked: root.cancelClose()
             }
         }
 

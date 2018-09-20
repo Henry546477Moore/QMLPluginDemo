@@ -33,7 +33,7 @@ Item {
         width: parent.width
         height: parent.height - titleItem.height
         color: "white"
-        opacity: 0.6
+        opacity: appConfig.backgroundOpacity
     }
 
     Item {
