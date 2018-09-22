@@ -87,5 +87,6 @@
         <file>controls/CustomWindowBase.qml</file>
         <file>controls/PageTemplateBase.qml</file>
         <file>controls/CommonBackground.qml</file>
+        <file>images/loginbg.png</file>
     </qresource>
 </RCC>

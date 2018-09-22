@@ -26,7 +26,7 @@ Button {
      implicitHeight: control.height
      opacity: enabled ? 1 : 0.3
      border.width: 0
-     color: control.hovered ? "#3CC3F5" : (control.down ? "#3CC3F5" : "#00A3FF")
+     color: control.hovered ? "#dd1abcbc" : (control.down ? "#dd1abcbc" : "#1abcbc")
      radius: 2
     }
 }

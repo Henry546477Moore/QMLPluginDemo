@@ -20,7 +20,6 @@ void SystemConfigInfo::readConfig()
     if(!f.exists())
     {
         set->setValue("/system/language", "zh_CN");
-        set->setValue("/system/title", tr("qml plugin application"));
         set->setValue("/system/user_name", stringToMD5("admin"));
         set->setValue("/system/password", stringToMD5("123456"));
         set->setValue("/system/close_type", 1);         //0: close, 1: minimize, 2: choice by user
@@ -33,7 +32,7 @@ void SystemConfigInfo::readConfig()
     }
 
     QString _language = set->value("/system/language", "zh_CN").toString();
-    m_appTitle = set->value("/system/title", tr("qml plugin application")).toString();
+    m_appTitle = tr("qml plugin application");
     m_userName = set->value("/system/user_name", stringToMD5("admin")).toString();
     m_pwd = set->value("/system/password", stringToMD5("123456")).toString();
     m_closeType = set->value("/system/close_type", 1).toInt();
