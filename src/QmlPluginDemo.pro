@@ -1,5 +1,8 @@
 TEMPLATE = subdirs
 SUBDIRS += \
-    Main
+    Main \
+    MainModules \
+    Controls \
+    ClientModules
 
 TRANSLATIONS = zh_CN.ts en_US.ts
