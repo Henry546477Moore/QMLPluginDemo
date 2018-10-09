@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
     QFontDatabase::applicationFontFamilies(fontID);
 
     QQmlApplicationEngine engine;
+    QString path=QGuiApplication::applicationDirPath();
+    engine.addImportPath(path + "/CommonControls");
     engine.load(QUrl(QStringLiteral("qrc:/LoginView.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
